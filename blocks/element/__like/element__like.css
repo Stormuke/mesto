@@ -3,8 +3,14 @@
   width: 22px;
   height: 19px;
   cursor: pointer;
+  transition: opacity 0.2s linear;
+}
+
+.element__like:hover {
+  opacity: 0.6;
 }
 
 .element__like:active {
   background: center center no-repeat url(../../../images/like-active.svg);
+  opacity: 1;
 }

@@ -3,6 +3,10 @@
 @import url(../blocks/page/page.css);
 @import url(../blocks/container/container.css);
 
+/*popup*/
+@import url(../blocks/popup/popup.css);
+@import url(../blocks/popup/_opened/popup_opened.css);
+
 /*header*/
 @import url(../blocks/header/header.css);
 @import url(../blocks/header/__logo/header__logo.css);
@@ -26,5 +30,6 @@
 @import url(../blocks/element/__like/element__like.css);
 @import url(../blocks/element/__title/element__title.css);
 
+/*footer*/
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__text/footer__text.css);

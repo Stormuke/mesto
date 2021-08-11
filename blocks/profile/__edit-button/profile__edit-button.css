@@ -2,6 +2,12 @@
   background: center center no-repeat
     url(../../../images/profile__edit-button.svg);
   border: 1px solid #fff;
+  cursor: pointer;
+  transition: opacity 0.2s linear;
+}
+
+.profile__edit-button:hover {
+  opacity: 0.6;
 }
 
 @media screen and (min-width: 768px) {

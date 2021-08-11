@@ -3,6 +3,12 @@
     url(../../../images/profile__add-button.svg);
   border: 2px solid rgba(255, 255, 255, 1);
   border-radius: 2px;
+  transition: opacity 0.2s linear;
+  cursor: pointer;
+}
+
+.profile__add-button:hover {
+  opacity: 0.6;
 }
 
 @media screen and (min-width: 768px) {
