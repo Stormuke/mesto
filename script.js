@@ -33,4 +33,4 @@ function popupSubmit(evt) {
   document.querySelector('.profile__title').textContent = popupTitle;
   document.querySelector('.profile__subtitle').textContent = popupSubtitle;
 }
-submitButton.addEventListener('click', popupSubmit);
+form.addEventListener('submit', popupSubmit);
