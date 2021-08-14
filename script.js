@@ -9,8 +9,8 @@ function popupOpen() {
 
   let profileTitleContent = document.querySelector('.profile__title').textContent;
   let profileSubtitleContent = document.querySelector('.profile__subtitle').textContent;
-  document.querySelectorAll('.popup__text')[0].value = profileTitleContent;
-  document.querySelectorAll('.popup__text')[1].value = profileSubtitleContent;
+  document.form["popup-title"].value = profileTitleContent;
+  document.form["popup-subtitle"].value = profileSubtitleContent;
 }
 
 function popupClose() {
@@ -28,9 +28,9 @@ document.addEventListener("keydown", function (event) {
 
 function popupSubmit(evt) {
   evt.preventDefault();
-  let popupTitle = document.querySelectorAll('.popup__text')[0].value;
-  let popupSubtitle = document.querySelectorAll('.popup__text')[1].value;
+  let popupTitle = document.form["popup-title"].value;
+  let popupSubtitle = document.form["popup-subtitle"].value;
   document.querySelector('.profile__title').textContent = popupTitle;
   document.querySelector('.profile__subtitle').textContent = popupSubtitle;
 }
-submitBtn.addEventListener('click', popupSubmit);
+submitButton.addEventListener('click', popupSubmit);
