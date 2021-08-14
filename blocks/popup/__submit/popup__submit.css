@@ -1,11 +1,12 @@
 .popup__submit {
   border: none;
   background-color: #000;
-
   color: #fff;
   border-radius: 2px;
   transition: opacity 0.3s linear;
   cursor: pointer;
+  max-width: 80%;
+  margin: 0 auto;
 }
 
 .popup__submit:hover {

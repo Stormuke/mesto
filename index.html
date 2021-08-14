@@ -9,15 +9,6 @@
   </head>
   <body class="page">
     <div class="container">
-      <div class="popup">
-        <form class="popup__container">
-          <div class="popup__button-close"></div>
-          <h2 class="popup__title">Редактировать профиль</h2>
-          <input type="text" class="popup__text" />
-          <input type="text" class="popup__text" />
-          <button class="popup__submit">Сохранить</button>
-        </form>
-      </div>
       <header class="header">
         <img src="./images/logo.svg" alt="Логотип Место" class="header__logo" />
       </header>
@@ -102,6 +93,15 @@
           </div>
         </section>
 
+        <div class="popup">
+          <form name="form" class="popup__container">
+            <div class="popup__button-close"></div>
+            <h2 class="popup__title">Редактировать профиль</h2>
+            <input type="text" name="popup-title" class="popup__text" value="text"/>
+            <input type="text" name="popup-subtitle" class="popup__text" value="text"/>
+            <button type="submit" class="popup__submit">Сохранить</button>
+          </form>
+        </div>
         <footer class="footer">
           <p class="footer__text" lang="en">&copy; 2021 Mesto Russia</p>
         </footer>
