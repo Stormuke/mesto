@@ -1,8 +1,10 @@
 .popup__text {
   border: none;
   border-bottom: 1px solid #000;
-  margin-top: 30px;
-  width: 80%;
+  margin-top: 27px;
+  width: 90%;
+  font-size: 14px;
+  line-height: 28.94px;
 }
 
 .popup__text:first-of-type {

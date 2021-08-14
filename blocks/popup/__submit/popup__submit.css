@@ -5,8 +5,6 @@
   border-radius: 2px;
   transition: opacity 0.3s linear;
   cursor: pointer;
-  max-width: 80%;
-  margin: 0 auto;
 }
 
 .popup__submit:hover {
@@ -17,6 +15,7 @@
   .popup__submit {
     padding: 14px 124px 18px;
     margin-top: 48px;
+    max-width: 90%;
   }
 }
 
@@ -24,5 +23,6 @@
   .popup__submit {
     padding: 14px 82px;
     margin-top: 44px;
+    max-width: 92%;
   }
 }
