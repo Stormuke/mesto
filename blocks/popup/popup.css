@@ -1,11 +1,9 @@
 .popup {
-  display: flex;
   justify-content: center;
   align-items: center;
   display: none;
   position: fixed;
-  background: center center rgba(0, 0, 0, 0.5);
-  background-size: contain;
+  background: rgba(0, 0, 0, 0.5);
   inset: 0;
   z-index: 2;
 }

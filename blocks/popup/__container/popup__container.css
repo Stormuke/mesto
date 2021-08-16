@@ -1,6 +1,6 @@
 .popup__container {
   display: flex;
-  position: fixed;
+  position: relative;
   flex-direction: column;
   background-color: #fff;
   color: #000;
@@ -9,16 +9,12 @@
 
 @media screen and (min-width: 768px) {
   .popup__container {
-    top: 25%;
-    min-width: 394px;
     padding: 34px 0 37px 36px;
   }
 }
 
 @media screen and (max-width: 768px) {
   .popup__container {
-    top: 25%;
-    min-width: 260px;
     padding: 26px 0 25px 20px;
   }
 }

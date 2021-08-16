@@ -24,16 +24,16 @@
             <div class="profile__info">
               <div class="profile__title-container">
                 <h1 class="profile__title">Жак-Ив Кусто</h1>
-                <div class="profile__edit-button"></div>
+                <button type="button" class="profile__edit-button"></button>
               </div>
               <p class="profile__subtitle">Исследователь океана</p>
             </div>
           </div>
-          <div class="profile__add-button"></div>
+          <button type="button" class="profile__add-button"></button>
         </section>
 
         <section class="elements">
-          <div class="element">
+          <article class="element">
             <img
               src="./images/moscow.jpg"
               alt="Москва"
@@ -41,17 +41,17 @@
             />
             <div class="element__content">
               <h2 class="element__title">Москва</h2>
-              <div class="element__like"></div>
+              <button type="button" class="element__like"></button>
             </div>
-          </div>
-          <div class="element">
+          </article>
+          <article class="element">
             <img src="./images/bali.jpg" alt="Бали" class="element__image" />
             <div class="element__content">
               <h2 class="element__title">Бали</h2>
-              <div class="element__like"></div>
+              <button type="button" class="element__like"></button>
             </div>
-          </div>
-          <div class="element">
+          </article>
+          <article class="element">
             <img
               src="./images/georgia.jpg"
               alt="Грузия"
@@ -59,17 +59,17 @@
             />
             <div class="element__content">
               <h2 class="element__title">Грузия</h2>
-              <div class="element__like"></div>
+              <button type="button" class="element__like"></button>
             </div>
-          </div>
-          <div class="element">
+          </article>
+          <article class="element">
             <img src="./images/nepal.jpg" alt="Непал" class="element__image" />
             <div class="element__content">
               <h2 class="element__title">Непал</h2>
-              <div class="element__like"></div>
+              <button type="button" class="element__like"></button>
             </div>
-          </div>
-          <div class="element">
+          </article>
+          <article class="element">
             <img
               src="./images/new-york.jpg"
               alt="Нью-Йорк"
@@ -77,10 +77,10 @@
             />
             <div class="element__content">
               <h2 class="element__title">Нью-Йорк</h2>
-              <div class="element__like"></div>
+              <button type="button" class="element__like"></button>
             </div>
-          </div>
-          <div class="element">
+          </article>
+          <article class="element">
             <img
               src="./images/norway.jpg"
               alt="Норвегия"
@@ -88,29 +88,31 @@
             />
             <div class="element__content">
               <h2 class="element__title">Норвегия</h2>
-              <div class="element__like"></div>
+              <button type="button" class="element__like"></button>
             </div>
-          </div>
+          </article>
         </section>
 
         <div class="popup">
-          <form name="form" class="popup__container">
-            <div class="popup__button-close"></div>
-            <h2 class="popup__title">Редактировать профиль</h2>
-            <input
-              type="text"
-              name="popup-title"
-              class="popup__text"
-              value=""
-            />
-            <input
-              type="text"
-              name="popup-subtitle"
-              class="popup__text"
-              value=""
-            />
-            <button type="submit" class="popup__submit">Сохранить</button>
-          </form>
+          <div class="popup__container">
+            <button type="button" class="popup__button-close"></button>
+            <form name="form" class="popup__form">
+              <h2 class="popup__title">Редактировать профиль</h2>
+              <input
+                type="text"
+                name="popup-title"
+                class="popup__text"
+                value=""
+              />
+              <input
+                type="text"
+                name="popup-subtitle"
+                class="popup__text"
+                value=""
+              />
+              <button type="submit" class="popup__submit">Сохранить</button>
+            </form>
+          </div>
         </div>
         <footer class="footer">
           <p class="footer__text" lang="en">&copy; 2021 Mesto Russia</p>
