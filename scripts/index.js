@@ -2,8 +2,8 @@ let popup = document.querySelector('.popup');
 let editBtn = document.querySelector('.profile__edit-button');
 let closeBtn = document.querySelector('.popup__button-close');
 let form = document.querySelector('.popup__form');
-const titlePopup = document.form['popup-title'];
-const subtitlePopup = document.form['popup-subtitle'];
+const titlePopup = document.edit_profile['popup-title'];
+const subtitlePopup = document.edit_profile['popup-subtitle'];
 const profileTitleContent = document.querySelector('.profile__title');
 const profileSubtitleContent = document.querySelector('.profile__subtitle');
 
