@@ -11,7 +11,3 @@
   opacity: 0.5;
 }
 
-.element__like:active {
-  background: center center no-repeat url(../../../images/like-active.svg);
-  opacity: 1;
-}

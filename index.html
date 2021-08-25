@@ -36,65 +36,24 @@
         </section>
 
         <section class="elements">
+
+          </section>
+
+          <template class="element_template">
           <article class="element">
             <img
-              src="./images/moscow.jpg"
-              alt="Москва"
+              src=""
+              alt=""
               class="element__image"
             />
             <div class="element__content">
-              <h2 class="element__title">Москва</h2>
+              <h2 class="element__title">
+
+              </h2>
               <button type="button" class="element__like"></button>
             </div>
           </article>
-          <article class="element">
-            <img src="./images/bali.jpg" alt="Бали" class="element__image" />
-            <div class="element__content">
-              <h2 class="element__title">Бали</h2>
-              <button type="button" class="element__like"></button>
-            </div>
-          </article>
-          <article class="element">
-            <img
-              src="./images/georgia.jpg"
-              alt="Грузия"
-              class="element__image"
-            />
-            <div class="element__content">
-              <h2 class="element__title">Грузия</h2>
-              <button type="button" class="element__like"></button>
-            </div>
-          </article>
-          <article class="element">
-            <img src="./images/nepal.jpg" alt="Непал" class="element__image" />
-            <div class="element__content">
-              <h2 class="element__title">Непал</h2>
-              <button type="button" class="element__like"></button>
-            </div>
-          </article>
-          <article class="element">
-            <img
-              src="./images/new-york.jpg"
-              alt="Нью-Йорк"
-              class="element__image"
-            />
-            <div class="element__content">
-              <h2 class="element__title">Нью-Йорк</h2>
-              <button type="button" class="element__like"></button>
-            </div>
-          </article>
-          <article class="element">
-            <img
-              src="./images/norway.jpg"
-              alt="Норвегия"
-              class="element__image"
-            />
-            <div class="element__content">
-              <h2 class="element__title">Норвегия</h2>
-              <button type="button" class="element__like"></button>
-            </div>
-          </article>
-        </section>
+          </template>
 
         <div class="popup">
           <div class="popup__container">
@@ -103,15 +62,39 @@
               <h2 class="popup__title">Редактировать профиль</h2>
               <input
                 type="text"
-                name="popup-title"
+                name="profile-name"
                 class="popup__text"
                 value=""
               />
               <input
                 type="text"
-                name="popup-subtitle"
+                name="profile-job"
                 class="popup__text"
                 value=""
+              />
+              <button type="submit" class="popup__submit">Сохранить</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="popup">
+          <div class="popup__container">
+            <button type="button" class="popup__button-close"></button>
+            <form name="add_mesto" class="popup__form">
+              <h2 class="popup__title">Новое место</h2>
+              <input
+                type="text"
+                name="add-mesto_title"
+                class="popup__text"
+                value=""
+                placeholder="Название"
+              />
+              <input
+                type="text"
+                name="add-mesto_link"
+                class="popup__text"
+                value=""
+                placeholder="Ссылка на картинку"
               />
               <button type="submit" class="popup__submit">Сохранить</button>
             </form>
