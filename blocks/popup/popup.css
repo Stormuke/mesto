@@ -2,11 +2,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  visibility: hidden;
   position: fixed;
   background: rgba(0, 0, 0, 0.5);
   inset: 0;
   z-index: 2;
   opacity: 0;
+  visibility: hidden;
   transition: opacity 0.3s linear, visibility 0.3s linear;
 }

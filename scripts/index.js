@@ -45,6 +45,7 @@ const profileJobContent = document.querySelector('.profile__subtitle')
 //функция добавления места
 function openPopupMesto() {
   popup[1].classList.add('popup_opened')
+  popup[1].style.display = "flex"
 }
 
 //функция закрытия формы добавления места
@@ -72,9 +73,10 @@ function submitPopupProfile(evt) {
   closePopupProfile();
 }
 
+
 //функция удаления карточек
-const deleteCard = (event) => {
-  event.target.closest('.element').remove();
+const deleteCard = (evt) => {
+  evt.target.closest('.element').remove();
 };
 
 //функция лайков
@@ -85,10 +87,12 @@ const addLike = (evt) => {
 //функция открытия карточки на полный экран
 const fullScreenImage = (evt) => {
   popup[2].classList.add('popup_opened')
+  popup[2].style.background = 'rgba(0, 0, 0, 0.9)'
   document.querySelector('.popup__image').src = evt.target.closest('.element__image').src
   document.querySelector('.popup__description').textContent = evt.target.closest('.element').textContent
 }
 
+//функция закрытия карточки на полный экран
 function closePopupFullScreen() {
   popup[2].classList.remove('popup_opened')
 }
