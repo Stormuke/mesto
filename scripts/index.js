@@ -85,9 +85,9 @@ const addLike = (evt) => {
 //функция открытия карточки на полный экран
 const fullScreenImage = (evt) => {
   popup[2].classList.add('popup_opened')
-  popup[2].style.background = 'rgba(0, 0, 0, 0.9)'
   document.querySelector('.popup__image').src = evt.target.closest('.element__image').src
   document.querySelector('.popup__description').textContent = evt.target.closest('.element').textContent
+  document.querySelector('.popup__image').alt = evt.target.closest('.element').textContent.trim()
 }
 
 //функция закрытия карточки на полный экран
@@ -103,6 +103,7 @@ const addCard = (element) => {
   const cardElement = elementTemplate.cloneNode(true)
   cardElement.querySelector('.element__title').textContent = element.name
   cardElement.querySelector('.element__image').src = element.link
+  cardElement.querySelector('.element__image').alt = element.name
   cardElement.querySelector('.element__delete').addEventListener('click', deleteCard)
   cardElement.querySelector('.element__like').addEventListener('click', addLike)
   cardElement.querySelector('.element__image').addEventListener('click', fullScreenImage)
