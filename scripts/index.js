@@ -1,15 +1,13 @@
 //кнопки
 const addBtn = document.querySelector('.profile__add-button')
-
 const editBtn = document.querySelector('.profile__edit-button')
 const closeBtn = document.querySelectorAll('.popup__button-close')
 
 //формы
 const profileForm = document.querySelector('.popup__form')
 const popup = document.querySelectorAll('.popup')
-const cardElement = document.querySelector('.element')
-const elementTemplate = document.querySelector('.element_template').content
-const cardsContainer = document.querySelector('.elements')
+
+
 
 //массивы
 const initialCards = [
@@ -50,6 +48,8 @@ function openPopupMesto() {
   popup[1].classList.add('popup_opened')
 }
 
+
+
 //функция закрытия формы добавления места
 function closePopupMesto() {
   popup[1].classList.remove('popup_opened')
@@ -80,18 +80,29 @@ const deleteCard = (event) => {
   event.target.closest('.element').remove();
 };
 
+//функция лайков
 const addLike = (evt) => {
   evt.target.classList.toggle('element__like_active')
 }
 
+const fullScreenImage = (evt) => {
+  popup[2].classList.add('popup_opened')
+  document.querySelector('.popup__image').src = evt.target.closest('.element__image').src
+  document.querySelector('.popup__description').textContent = evt.target.closest('.element').textContent
+}
+
 //функция добавления карточек
 const addCard = (element) => {
-  const cardElement = elementTemplate.cloneNode(true);
+  const elementTemplate = document.querySelector('.element_template').content
+  const cardsContainer = document.querySelector('.elements')
+
+  const cardElement = elementTemplate.cloneNode(true)
   cardElement.querySelector('.element__title').textContent = element.name
   cardElement.querySelector('.element__image').src = element.link
-  cardElement.querySelector('.element__delete').addEventListener('click', deleteCard);
+  cardElement.querySelector('.element__delete').addEventListener('click', deleteCard)
   cardElement.querySelector('.element__like').addEventListener('click', addLike)
-  cardsContainer.prepend(cardElement)
+  cardElement.querySelector('.element__image').addEventListener('click', fullScreenImage)
+  cardsContainer.append(cardElement)
 }
 
 //создание карточек
