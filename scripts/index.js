@@ -1,6 +1,6 @@
 //кнопки
 const addBtn = document.querySelector('.profile__add-button')
-const likeBtn = document.querySelectorAll('.element__like')
+
 const editBtn = document.querySelector('.profile__edit-button')
 const closeBtn = document.querySelectorAll('.popup__button-close')
 
@@ -75,13 +75,21 @@ function submitPopupProfile(evt) {
   closePopupProfile();
 }
 
-//создание карточек
-initialCards.forEach(function (element) {
-  const cardElement = elementTemplate.cloneNode(true);
-  cardElement.querySelector('.element__title').textContent = element.name;
-  cardElement.querySelector('.element__image').src = element.link;
+const deleteCard = (event) => {
+  event.target.closest('.element').remove();
+};
 
-  cardsContainer.append(cardElement)
+const addCard = (element) => {
+  const cardElement = elementTemplate.cloneNode(true);
+  cardElement.querySelector('.element__title').textContent = element.name
+  cardElement.querySelector('.element__image').src = element.link
+  cardElement.querySelector('.element__delete').addEventListener('click', deleteCard);
+  cardsContainer.prepend(cardElement)
+}
+
+//создание карточек
+initialCards.forEach((element,like) => {
+  addCard(element)
 })
 
 //функция закрытия формы добавления места
