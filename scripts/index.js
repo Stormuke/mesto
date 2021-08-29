@@ -43,36 +43,34 @@ const profileNameContent = document.querySelector('.profile__title')
 const profileJobContent = document.querySelector('.profile__subtitle')
 
 //функция добавления места
-function openPopupMesto() {
+const openPopupMesto = () => {
   popup[1].classList.add('popup_opened')
-  popup[1].style.display = "flex"
 }
 
 //функция закрытия формы добавления места
-function closePopupMesto() {
+const closePopupMesto = () => {
   popup[1].classList.remove('popup_opened')
 }
 
 //функция открытия формы редактирования профиля
-function openPopupProfile() {
+const openPopupProfile = () => {
   namePopup.value = profileNameContent.textContent
   jobPopup.value = profileJobContent.textContent
   popup[0].classList.add('popup_opened');
 }
 
 //функция закрытия формы редактирования профиля
-function closePopupProfile() {
+const closePopupProfile = () => {
   popup[0].classList.remove('popup_opened')
 }
 
 //функция подтверждения изменений в редактировнии
-function submitPopupProfile(evt) {
+const submitPopupProfile = (evt) => {
   evt.preventDefault();
   profileNameContent.textContent = namePopup.value
   profileJobContent.textContent = jobPopup.value
   closePopupProfile();
 }
-
 
 //функция удаления карточек
 const deleteCard = (evt) => {
@@ -93,7 +91,7 @@ const fullScreenImage = (evt) => {
 }
 
 //функция закрытия карточки на полный экран
-function closePopupFullScreen() {
+const closePopupFullScreen = () => {
   popup[2].classList.remove('popup_opened')
 }
 
@@ -124,7 +122,7 @@ function submitPopupMesto(evt) {
     link: document.getElementsByName('add-mesto_link')[0].value
 })
 
-  addMestoForm[0].reset();
+  addMestoForm[0].reset()
   closePopupMesto()
 }
 
