@@ -104,7 +104,7 @@ const addCard = (element) => {
   cardElement.querySelector('.element__delete').addEventListener('click', deleteCard)
   cardElement.querySelector('.element__like').addEventListener('click', addLike)
   cardElement.querySelector('.element__image').addEventListener('click', fullScreenImage)
-  cardsContainer.append(cardElement)
+  cardsContainer.prepend(cardElement)
 }
 
 //создание карточек
@@ -115,6 +115,12 @@ initialCards.forEach((element) => {
 //функция закрытия формы добавления места
 function submitPopupMesto(evt) {
   evt.preventDefault()
+  addCard({
+    name: document.getElementsByName('add-mesto_title')[0].value,
+    link: document.getElementsByName('add-mesto_link')[0].value
+})
+
+  addMestoForm[0].reset();
   closePopupMesto()
 }
 
