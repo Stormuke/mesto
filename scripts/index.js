@@ -75,20 +75,27 @@ function submitPopupProfile(evt) {
   closePopupProfile();
 }
 
+//функция удаления карточек
 const deleteCard = (event) => {
   event.target.closest('.element').remove();
 };
 
+const addLike = (evt) => {
+  evt.target.classList.toggle('element__like_active')
+}
+
+//функция добавления карточек
 const addCard = (element) => {
   const cardElement = elementTemplate.cloneNode(true);
   cardElement.querySelector('.element__title').textContent = element.name
   cardElement.querySelector('.element__image').src = element.link
   cardElement.querySelector('.element__delete').addEventListener('click', deleteCard);
+  cardElement.querySelector('.element__like').addEventListener('click', addLike)
   cardsContainer.prepend(cardElement)
 }
 
 //создание карточек
-initialCards.forEach((element,like) => {
+initialCards.forEach((element) => {
   addCard(element)
 })
 
