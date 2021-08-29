@@ -4,10 +4,9 @@ const editBtn = document.querySelector('.profile__edit-button')
 const closeBtn = document.querySelectorAll('.popup__button-close')
 
 //формы
-const profileForm = document.querySelector('.popup__form')
+const editProfileForm = document.getElementsByName('edit_profile')
+const addMestoForm = document.getElementsByName('add_mesto')
 const popup = document.querySelectorAll('.popup')
-
-
 
 //массивы
 const initialCards = [
@@ -48,8 +47,6 @@ function openPopupMesto() {
   popup[1].classList.add('popup_opened')
 }
 
-
-
 //функция закрытия формы добавления места
 function closePopupMesto() {
   popup[1].classList.remove('popup_opened')
@@ -85,10 +82,15 @@ const addLike = (evt) => {
   evt.target.classList.toggle('element__like_active')
 }
 
+//функция открытия карточки на полный экран
 const fullScreenImage = (evt) => {
   popup[2].classList.add('popup_opened')
   document.querySelector('.popup__image').src = evt.target.closest('.element__image').src
   document.querySelector('.popup__description').textContent = evt.target.closest('.element').textContent
+}
+
+function closePopupFullScreen() {
+  popup[2].classList.remove('popup_opened')
 }
 
 //функция добавления карточек
@@ -117,11 +119,13 @@ function submitPopupMesto(evt) {
 }
 
 //ивенты
-profileForm.addEventListener('submit', submitPopupProfile)
+editProfileForm[0].addEventListener('submit', submitPopupProfile)
+addMestoForm[0].addEventListener('submit', submitPopupMesto)
 editBtn.addEventListener('click', openPopupProfile)
-closeBtn[0].addEventListener('click', closePopupProfile)
 addBtn.addEventListener('click', openPopupMesto)
+closeBtn[0].addEventListener('click', closePopupProfile)
 closeBtn[1].addEventListener('click', closePopupMesto)
+closeBtn[2].addEventListener('click', closePopupFullScreen)
 
 
 /*
