@@ -4,9 +4,23 @@ const editBtn = document.querySelector('.profile__edit-button')
 const closeBtn = document.querySelectorAll('.popup__button-close')
 
 //формы
-const editProfileForm = document.getElementsByName('edit_profile')
-const addMestoForm = document.getElementsByName('add_mesto')
-const popup = document.querySelectorAll('.popup')
+const editForm = document.querySelector('.popup_edit-form')
+const addForm = document.querySelector('.popup_add-form')
+const openFullScreenForm = document.querySelector('.popup_fullscreen-form')
+
+//инпуты форм
+const namePopup = document.edit_profile['profile-name']
+const jobPopup = document.edit_profile['profile-job']
+const handleAddMestoName = document.add_mesto['add-mesto_title']
+const handleAddMestoLink = document.add_mesto['add-mesto_link']
+
+//профиль пользоватея
+const profileNameContent = document.querySelector('.profile__title')
+const profileJobContent = document.querySelector('.profile__subtitle')
+
+//темплейт
+const elementTemplate = document.querySelector('.element_template').content.querySelector('.element')
+const cardsContainer = document.querySelector('.elements')
 
 //массивы
 const initialCards = [
@@ -36,35 +50,54 @@ const initialCards = [
   }
 ];
 
-//форма редактирования профиля
-const namePopup = document.edit_profile['profile-name']
-const jobPopup = document.edit_profile['profile-job']
-const profileNameContent = document.querySelector('.profile__title')
-const profileJobContent = document.querySelector('.profile__subtitle')
-
-//функция добавления места
-const openPopupMesto = () => {
-  popup[1].classList.add('popup_opened')
-}
-
-//функция закрытия формы добавления места
-const closePopupMesto = () => {
-  popup[1].classList.remove('popup_opened')
-}
-
 //функция открытия формы редактирования профиля
 const openPopupProfile = () => {
   namePopup.value = profileNameContent.textContent
   jobPopup.value = profileJobContent.textContent
-  popup[0].classList.add('popup_opened');
+  editForm.classList.add('popup_opened');
 }
 
 //функция закрытия формы редактирования профиля
 const closePopupProfile = () => {
-  popup[0].classList.remove('popup_opened')
+  editForm.classList.remove('popup_opened')
 }
 
-//функция подтверждения изменений в редактировнии
+//функция открытия формы добавления места
+const openPopupMesto = () => {
+  addForm.classList.add('popup_opened')
+}
+
+//функция закрытия формы добавления места
+const closePopupMesto = () => {
+  addForm.classList.remove('popup_opened')
+}
+
+//функция открытия карточки на полный экран
+const fullScreenImage = (evt) => {
+  openFullScreenForm.classList.add('popup_opened')
+  document.querySelector('.popup__image').src = evt.target.closest('.element__image').src
+  document.querySelector('.popup__description').textContent = evt.target.closest('.element').textContent
+  document.querySelector('.popup__image').alt = evt.target.closest('.element').textContent.trim()
+}
+
+//функция закрытия карточки на полный экран
+const closePopupFullScreen = () => {
+  openFullScreenForm.classList.remove('popup_opened')
+}
+
+//функция закрытия формы добавления места
+function submitPopupMesto(evt) {
+  evt.preventDefault()
+  createCards({
+    name: handleAddMestoName.value,
+    link: handleAddMestoLink.value
+})
+
+  document.add_mesto.reset()
+  closePopupMesto()
+}
+
+//функция подтверждения изменений в редактировнии профиля
 const submitPopupProfile = (evt) => {
   evt.preventDefault();
   profileNameContent.textContent = namePopup.value
@@ -82,59 +115,42 @@ const addLike = (evt) => {
   evt.target.classList.toggle('element__like_active')
 }
 
-//функция открытия карточки на полный экран
-const fullScreenImage = (evt) => {
-  popup[2].classList.add('popup_opened')
-  document.querySelector('.popup__image').src = evt.target.closest('.element__image').src
-  document.querySelector('.popup__description').textContent = evt.target.closest('.element').textContent
-  document.querySelector('.popup__image').alt = evt.target.closest('.element').textContent.trim()
-}
 
-//функция закрытия карточки на полный экран
-const closePopupFullScreen = () => {
-  popup[2].classList.remove('popup_opened')
-}
 
-//функция добавления карточек
+//возврат разметки карточки
 const addCard = (element) => {
-  const elementTemplate = document.querySelector('.element_template').content
-  const cardsContainer = document.querySelector('.elements')
-
   const cardElement = elementTemplate.cloneNode(true)
+
   cardElement.querySelector('.element__title').textContent = element.name
   cardElement.querySelector('.element__image').src = element.link
   cardElement.querySelector('.element__image').alt = element.name
   cardElement.querySelector('.element__delete').addEventListener('click', deleteCard)
   cardElement.querySelector('.element__like').addEventListener('click', addLike)
   cardElement.querySelector('.element__image').addEventListener('click', fullScreenImage)
-  cardsContainer.prepend(cardElement)
+  return cardElement
+}
+
+//добавление карточек в контейнер
+const createCards = (element) => {
+  cardsContainer.prepend(addCard(element))
 }
 
 //создание карточек
 initialCards.forEach((element) => {
-  addCard(element)
+  createCards(element)
 })
-
-//функция закрытия формы добавления места
-function submitPopupMesto(evt) {
-  evt.preventDefault()
-  addCard({
-    name: document.getElementsByName('add-mesto_title')[0].value,
-    link: document.getElementsByName('add-mesto_link')[0].value
-})
-
-  addMestoForm[0].reset()
-  closePopupMesto()
-}
 
 //ивенты
-editProfileForm[0].addEventListener('submit', submitPopupProfile)
-addMestoForm[0].addEventListener('submit', submitPopupMesto)
+editForm.addEventListener('submit', submitPopupProfile)
+addForm.addEventListener('submit', submitPopupMesto)
 editBtn.addEventListener('click', openPopupProfile)
 addBtn.addEventListener('click', openPopupMesto)
-closeBtn[0].addEventListener('click', closePopupProfile)
-closeBtn[1].addEventListener('click', closePopupMesto)
-closeBtn[2].addEventListener('click', closePopupFullScreen)
+closeBtn.forEach((element) => {
+  element.addEventListener('click', () =>{
+    document.querySelectorAll('.popup').forEach((element) => {
+      element.classList.remove('popup_opened')})
+  })
+})
 
 
 /*
