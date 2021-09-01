@@ -7,6 +7,8 @@ const closeBtn = document.querySelectorAll('.popup__button-close')
 const editForm = document.querySelector('.popup_edit-form')
 const addForm = document.querySelector('.popup_add-form')
 const openFullScreenForm = document.querySelector('.popup_fullscreen-form')
+const popups = document.querySelectorAll('.popup')
+const addMestoForm = document.add_mesto
 
 //инпуты форм
 const namePopup = document.edit_profile['profile-name']
@@ -50,51 +52,44 @@ const initialCards = [
   }
 ];
 
-//функция открытия формы редактирования профиля
-const openPopupProfile = () => {
+//функция закрытия любых попапов
+const closePopup = () => {
+  popups.forEach((element) => {
+    element.classList.remove('popup_opened')})
+}
+
+//функция открытия попапов
+const openPopup = (element) => {
+  element.classList.add('popup_opened');
+}
+
+//функция добавления информации в инпуты при открытии формы редактирования профиля
+const addInfoProfileForm = () => {
   namePopup.value = profileNameContent.textContent
   jobPopup.value = profileJobContent.textContent
-  editForm.classList.add('popup_opened');
-}
-
-//функция закрытия формы редактирования профиля
-const closePopupProfile = () => {
-  editForm.classList.remove('popup_opened')
-}
-
-//функция открытия формы добавления места
-const openPopupMesto = () => {
-  addForm.classList.add('popup_opened')
-}
-
-//функция закрытия формы добавления места
-const closePopupMesto = () => {
-  addForm.classList.remove('popup_opened')
 }
 
 //функция открытия карточки на полный экран
 const fullScreenImage = (evt) => {
-  openFullScreenForm.classList.add('popup_opened')
-  document.querySelector('.popup__image').src = evt.target.closest('.element__image').src
-  document.querySelector('.popup__description').textContent = evt.target.closest('.element').textContent
-  document.querySelector('.popup__image').alt = evt.target.closest('.element').textContent.trim()
+  const imagePopupFullScreen = document.querySelector('.popup__image')
+  const textPopupFullScreen = document.querySelector('.popup__description')
+
+  openPopup(openFullScreenForm)
+  imagePopupFullScreen.src = evt.target.closest('.element__image').src
+  textPopupFullScreen.textContent = evt.target.closest('.element').textContent
+  imagePopupFullScreen.alt = evt.target.closest('.element').textContent.trim()
 }
 
-//функция закрытия карточки на полный экран
-const closePopupFullScreen = () => {
-  openFullScreenForm.classList.remove('popup_opened')
-}
-
-//функция закрытия формы добавления места
-function submitPopupMesto(evt) {
+//функция сабмита формы добавления места
+const submitPopupMesto = (evt) => {
   evt.preventDefault()
   createCards({
     name: handleAddMestoName.value,
     link: handleAddMestoLink.value
 })
 
-  document.add_mesto.reset()
-  closePopupMesto()
+  addMestoForm.reset()
+  closePopup()
 }
 
 //функция подтверждения изменений в редактировнии профиля
@@ -102,7 +97,7 @@ const submitPopupProfile = (evt) => {
   evt.preventDefault();
   profileNameContent.textContent = namePopup.value
   profileJobContent.textContent = jobPopup.value
-  closePopupProfile();
+  closePopup()
 }
 
 //функция удаления карточек
@@ -114,8 +109,6 @@ const deleteCard = (evt) => {
 const addLike = (evt) => {
   evt.target.classList.toggle('element__like_active')
 }
-
-
 
 //возврат разметки карточки
 const addCard = (element) => {
@@ -143,21 +136,21 @@ initialCards.forEach((element) => {
 //ивенты
 editForm.addEventListener('submit', submitPopupProfile)
 addForm.addEventListener('submit', submitPopupMesto)
-editBtn.addEventListener('click', openPopupProfile)
-addBtn.addEventListener('click', openPopupMesto)
+editBtn.addEventListener('click',() => {
+  openPopup(editForm)
+  addInfoProfileForm()
+})
+addBtn.addEventListener('click',() => {
+  openPopup(addForm)})
 closeBtn.forEach((element) => {
-  element.addEventListener('click', () =>{
-    document.querySelectorAll('.popup').forEach((element) => {
-      element.classList.remove('popup_opened')})
-  })
+  element.addEventListener('click', closePopup)
 })
 
-
 /*
-document.addEventListener('keydown', function (event) {
-  const key = event.key;
+document.addEventListener('keydown', function (evt) {
+  const key = evt.key
   if (key === 'Escape') {
-    closePopup();
+    closePopup()
   }
-});
+})
 */
