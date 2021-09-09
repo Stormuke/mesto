@@ -53,21 +53,28 @@
               type="button"
               class="popup__button-close popup__button-close_form_edit"
             ></button>
-            <form name="edit_profile" class="popup__form">
+            <form name="edit_profile" class="popup__form" novalidate>
               <h2 class="popup__title">Редактировать профиль</h2>
               <input
                 type="text"
-                name="profile-name"
+                name="profile_name"
                 class="popup__text"
                 value=""
                 placeholder="Имя"
+                minlength="2"
+                maxlength="40"
+                required
               />
+              <span class="popup__text-error"></span>
               <input
                 type="text"
-                name="profile-job"
+                name="profile_job"
                 class="popup__text"
                 value=""
                 placeholder="Профессиональная деятельность"
+                minlength="2"
+                maxlength="200"
+                required
               />
               <button type="submit" class="popup__submit">Сохранить</button>
             </form>
@@ -80,21 +87,25 @@
               type="button"
               class="popup__button-close popup__button-close_form_add"
             ></button>
-            <form name="add_mesto" class="popup__form">
+            <form name="add_mesto" class="popup__form" novalidate>
               <h2 class="popup__title">Новое место</h2>
               <input
                 type="text"
-                name="add-mesto_title"
+                name="mesto_title"
                 class="popup__text"
                 value=""
                 placeholder="Название"
+                minlength="1"
+                maxlength="30"
+                required
               />
               <input
                 type="url"
-                name="add-mesto_link"
+                name="mesto_link"
                 class="popup__text"
                 value=""
                 placeholder="Ссылка на картинку"
+                required
               />
               <button type="submit" class="popup__submit">Сохранить</button>
             </form>

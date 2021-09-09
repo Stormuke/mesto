@@ -7,17 +7,17 @@ const handleCloseAddBtn = document.querySelector('.popup__button-close_form_add'
 const handleCloseFullScreenBtn = document.querySelector('.popup__button-close_form_fullscreen')
 
 //формы
-const editForm = document.querySelector('.popup_form_edit')
-const addForm = document.querySelector('.popup_form_add')
-const openFullScreenForm = document.querySelector('.popup_form_fullscreen')
-const popups = document.querySelector('.popup')
-const addMestoForm = document.add_mesto
+const modalEditFormPopup = document.querySelector('.popup_form_edit')
+const modalAddForm = document.querySelector('.popup_form_add')
+const modalFullScreenForm = document.querySelector('.popup_form_fullscreen')
+const editProfileForm = document.forms.edit_profile
+const addMestoForm = document.forms.add_mesto
 
 //инпуты форм
-const namePopup = document.edit_profile['profile-name']
-const jobPopup = document.edit_profile['profile-job']
-const handleAddMestoName = document.add_mesto['add-mesto_title']
-const handleAddMestoLink = document.add_mesto['add-mesto_link']
+const namePopup = editProfileForm.elements.profile_name
+const jobPopup = editProfileForm.elements.profile_job
+const handleAddMestoName = addMestoForm.elements.mesto_title
+const handleAddMestoLink = addMestoForm.elements.mesto_link
 
 //профиль пользоватея
 const profileNameContent = document.querySelector('.profile__title')
@@ -76,12 +76,12 @@ const fullScreenImage = (evt) => {
   const imagePopupFullScreen = document.querySelector('.popup__image')
   const textPopupFullScreen = document.querySelector('.popup__description')
 
-  openPopup(openFullScreenForm)
+  openPopup(modalFullScreenForm)
   imagePopupFullScreen.src = evt.target.closest('.element__image').src
   textPopupFullScreen.textContent = evt.target.closest('.element').textContent
   imagePopupFullScreen.alt = evt.target.closest('.element').textContent.trim()
   handleCloseFullScreenBtn.addEventListener('click', () => {
-    closePopup(openFullScreenForm)
+    closePopup(modalFullScreenForm)
   })
 }
 
@@ -94,7 +94,7 @@ const submitPopupMesto = (evt) => {
 })
 
   addMestoForm.reset()
-  closePopup(addForm)
+  closePopup(modalAddForm)
 }
 
 //функция подтверждения изменений в редактировнии профиля
@@ -102,7 +102,7 @@ const submitPopupProfile = (evt) => {
   evt.preventDefault();
   profileNameContent.textContent = namePopup.value
   profileJobContent.textContent = jobPopup.value
-  closePopup(editForm)
+  closePopup(modalEditFormPopup)
 }
 
 //функция удаления карточек
@@ -138,28 +138,53 @@ initialCards.forEach((element) => {
   createCards(element)
 })
 
+//закрытие форм по оверлею
+const handleCloseOverlay = (evt) => {
+  if (evt.target.classList.contains('popup')) {
+   closePopup(evt.target)
+  }
+}
+
 //ивенты
-editForm.addEventListener('submit', submitPopupProfile)
-addForm.addEventListener('submit', submitPopupMesto)
+modalEditFormPopup.addEventListener('submit', submitPopupProfile)
+modalAddForm.addEventListener('submit', submitPopupMesto)
 editBtn.addEventListener('click',() => {
-  openPopup(editForm)
+  openPopup(modalEditFormPopup)
   addInfoProfileForm()
 })
 addBtn.addEventListener('click',() => {
-  openPopup(addForm)})
+  openPopup(modalAddForm)})
 handleCloseEditBtn.addEventListener('click', () => {
-  closePopup(editForm)
+  closePopup(modalEditFormPopup)
 })
 handleCloseAddBtn.addEventListener('click', () => {
-  closePopup(addForm)
+  closePopup(modalAddForm)
 })
+modalAddForm.addEventListener('click', handleCloseOverlay)
+modalEditFormPopup.addEventListener('click', handleCloseOverlay)
+modalFullScreenForm.addEventListener('click', handleCloseOverlay)
 
-
-/*
-document.addEventListener('keydown', function (evt) {
-  const key = evt.key
-  if (key === 'Escape') {
-    closePopup()
+document.addEventListener('keydown', (evt) => {
+  if (evt.key === 'Escape') {
+    closePopup(modalAddForm)
+    closePopup(modalEditFormPopup)
+    closePopup(modalFullScreenForm)
   }
 })
-*/
+
+const submitBtn = document.querySelector('.popup__submit')
+
+const setSubmitButtonState = (isFormValid) => {
+  if (isFormValid) {
+    submitBtn.removeAttribute('disabled')
+    submitBtn.classList.remove('popup__submit_disabled')
+  } else {
+    submitBtn.setAttribute('disabled', true);
+    submitBtn.classList.add('popup__submit_disabled')
+  }
+}
+
+editProfileForm.addEventListener('input', () => {
+  const isValid = namePopup.value.length >= 2 && jobPopup.value.length >= 4
+  setSubmitButtonState(isValid)
+})
