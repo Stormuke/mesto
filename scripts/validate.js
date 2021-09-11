@@ -1,12 +1,12 @@
 //функция показа текста ошибки
-const showErrorNotification = (inputElement, errorMessage, inputErrorClass, errorClass) => {
+const showErrorText = (inputElement, errorMessage, inputErrorClass, errorClass) => {
   inputElement.classList.add(inputErrorClass)
   errorMessage.classList.add(errorClass)
   errorMessage.textContent = inputElement.validationMessage
 }
 
 //функция скрытия текста ошибки
-const hideErrorNotification = (inputElement, errorMessage, inputErrorClass, errorClass) => {
+const hideErrorText = (inputElement, errorMessage, inputErrorClass, errorClass) => {
   inputElement.classList.remove(inputErrorClass)
   errorMessage.classList.remove(errorClass)
   errorMessage.textContent = ''
@@ -28,9 +28,9 @@ const enableSubmitButton = (submitButton, inactiveButtonClass) => {
 const checkInputValidity = (formElement, inputElement, inputErrorClass, errorClass) => {
   const errorMessage = formElement.querySelector(`#${inputElement.id}-error`)
   if (!inputElement.validity.valid) {
-    showErrorNotification(inputElement, errorMessage, inputErrorClass, errorClass)
+    showErrorText(inputElement, errorMessage, inputErrorClass, errorClass)
   } else {
-    hideErrorNotification(inputElement, errorMessage, inputErrorClass, errorClass)
+    hideErrorText(inputElement, errorMessage, inputErrorClass, errorClass)
   }
 }
 
