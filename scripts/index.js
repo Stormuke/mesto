@@ -186,6 +186,6 @@ handleCloseAddBtn.addEventListener('click', () => {
   closePopup(modalAddForm)
 })
 popups.forEach((element) => {
-  element.addEventListener('click', closeFormOverlayClick)
+  element.addEventListener('mousedown', closeFormOverlayClick)
 })
 document.addEventListener('keydown', closeFormEscapeClick)
