@@ -18,6 +18,8 @@
 @import url(../blocks/popup/_theme/popup_theme_dark.css);
 @import url(../blocks/popup/__text/_type/popup__text_type_error.css);
 @import url(../blocks/popup/__submit/_disabled/popup__submit_disabled.css);
+@import url(../blocks/popup/__text-error/popup__text-error.css);
+@import url(../blocks/popup/__text-error/_visible/popup__text-error_visible.css);
 
 /*header*/
 @import url(../blocks/header/header.css);

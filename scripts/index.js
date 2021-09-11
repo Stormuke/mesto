@@ -7,6 +7,7 @@ const handleCloseAddBtn = document.querySelector('.popup__button-close_form_add'
 const handleCloseFullScreenBtn = document.querySelector('.popup__button-close_form_fullscreen')
 
 //формы
+const popups = Array.from(document.querySelectorAll('.popup'))
 const modalEditFormPopup = document.querySelector('.popup_form_edit')
 const modalAddForm = document.querySelector('.popup_form_add')
 const modalFullScreenForm = document.querySelector('.popup_form_fullscreen')
@@ -54,6 +55,16 @@ const initialCards = [
     link: 'https://images.unsplash.com/photo-1625592526284-350c652fe4a5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1868&q=80'
   }
 ];
+
+//конфиг форм
+const validationFormConfig = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__text',
+  submitButtonSelector: '.popup__submit',
+  inactiveButtonClass: 'popup__submit_disabled',
+  inputErrorClass: 'popup__text_type_error',
+  errorClass: 'popup__text-error_visible'
+}
 
 //функция закрытия попапов
 const closePopup = (element) => {
@@ -139,9 +150,19 @@ initialCards.forEach((element) => {
 })
 
 //закрытие форм по оверлею
-const handleCloseOverlay = (evt) => {
+const closeFormOverlayClick = (evt) => {
   if (evt.target.classList.contains('popup')) {
    closePopup(evt.target)
+  }
+}
+
+//закрытие форм по эскейпу
+const closeFormEscapeClick = (evt) => {
+  const keyEscape = evt.key
+  if (keyEscape === 'Escape') {
+    popups.forEach((element) => {
+      closePopup(element)
+    })
   }
 }
 
@@ -151,40 +172,20 @@ modalAddForm.addEventListener('submit', submitPopupMesto)
 editBtn.addEventListener('click',() => {
   openPopup(modalEditFormPopup)
   addInfoProfileForm()
+  enableValidation(validationFormConfig)
 })
+
 addBtn.addEventListener('click',() => {
-  openPopup(modalAddForm)})
+  openPopup(modalAddForm)
+  enableValidation(validationFormConfig)
+})
 handleCloseEditBtn.addEventListener('click', () => {
   closePopup(modalEditFormPopup)
 })
 handleCloseAddBtn.addEventListener('click', () => {
   closePopup(modalAddForm)
 })
-modalAddForm.addEventListener('click', handleCloseOverlay)
-modalEditFormPopup.addEventListener('click', handleCloseOverlay)
-modalFullScreenForm.addEventListener('click', handleCloseOverlay)
-
-document.addEventListener('keydown', (evt) => {
-  if (evt.key === 'Escape') {
-    closePopup(modalAddForm)
-    closePopup(modalEditFormPopup)
-    closePopup(modalFullScreenForm)
-  }
+popups.forEach((element) => {
+  element.addEventListener('click', closeFormOverlayClick)
 })
-
-const submitBtn = document.querySelector('.popup__submit')
-
-const setSubmitButtonState = (isFormValid) => {
-  if (isFormValid) {
-    submitBtn.removeAttribute('disabled')
-    submitBtn.classList.remove('popup__submit_disabled')
-  } else {
-    submitBtn.setAttribute('disabled', true);
-    submitBtn.classList.add('popup__submit_disabled')
-  }
-}
-
-editProfileForm.addEventListener('input', () => {
-  const isValid = namePopup.value.length >= 2 && jobPopup.value.length >= 4
-  setSubmitButtonState(isValid)
-})
+document.addEventListener('keydown', closeFormEscapeClick)

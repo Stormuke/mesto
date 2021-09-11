@@ -59,23 +59,27 @@
                 type="text"
                 name="profile_name"
                 class="popup__text"
+                id="profile_name"
                 value=""
                 placeholder="Имя"
                 minlength="2"
                 maxlength="40"
                 required
+
               />
-              <span class="popup__text-error"></span>
+              <span class="popup__text-error" id="profile_name-error"></span>
               <input
                 type="text"
                 name="profile_job"
                 class="popup__text"
+                id="profile_job"
                 value=""
                 placeholder="Профессиональная деятельность"
                 minlength="2"
                 maxlength="200"
                 required
               />
+              <span class="popup__text-error" id="profile_job-error"></span>
               <button type="submit" class="popup__submit">Сохранить</button>
             </form>
           </div>
@@ -92,6 +96,7 @@
               <input
                 type="text"
                 name="mesto_title"
+                id="mesto_title"
                 class="popup__text"
                 value=""
                 placeholder="Название"
@@ -99,14 +104,17 @@
                 maxlength="30"
                 required
               />
+              <span class="popup__text-error" id="mesto_title-error"></span>
               <input
                 type="url"
                 name="mesto_link"
                 class="popup__text"
+                id="mesto_link"
                 value=""
                 placeholder="Ссылка на картинку"
                 required
               />
+              <span class="popup__text-error" id="mesto_link-error"></span>
               <button type="submit" class="popup__submit">Сохранить</button>
             </form>
           </div>
@@ -128,6 +136,7 @@
         <p class="footer__text" lang="en">&copy; 2021 Mesto Russia</p>
       </footer>
     </div>
+    <script src="./scripts/validate.js"></script>
     <script src="./scripts/index.js"></script>
   </body>
 </html>
