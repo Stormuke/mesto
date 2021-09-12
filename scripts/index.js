@@ -68,7 +68,7 @@ const validationFormConfig = {
 const closePopup = (element) => {
   element.classList.remove('popup_opened')
   document.removeEventListener('keydown', closeFormEscapeClick)
-  }
+}
 
 //функция открытия попапов
 const openPopup = (element) => {
@@ -113,7 +113,7 @@ const submitPopupProfile = (evt) => {
 //функция удаления карточек
 const deleteCard = (evt) => {
   evt.target.closest('.element').remove();
-};
+}
 
 //функция лайков
 const addLike = (evt) => {
