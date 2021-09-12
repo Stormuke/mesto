@@ -1,18 +1,16 @@
 //кнопки
 const addBtn = document.querySelector('.profile__add-button')
 const editBtn = document.querySelector('.profile__edit-button')
-const closeBtn = document.querySelectorAll('.popup__button-close')
-const handleCloseEditBtn = document.querySelector('.popup__button-close_form_edit')
-const handleCloseAddBtn = document.querySelector('.popup__button-close_form_add')
-const handleCloseFullScreenBtn = document.querySelector('.popup__button-close_form_fullscreen')
 
-//формы
+//формы и элементы
 const popups = Array.from(document.querySelectorAll('.popup'))
 const modalEditFormPopup = document.querySelector('.popup_form_edit')
 const modalAddForm = document.querySelector('.popup_form_add')
 const modalFullScreenForm = document.querySelector('.popup_form_fullscreen')
 const editProfileForm = document.forms.edit_profile
 const addMestoForm = document.forms.add_mesto
+const imagePopupFullScreen = document.querySelector('.popup__image')
+const textPopupFullScreen = document.querySelector('.popup__description')
 
 //инпуты форм
 const namePopup = editProfileForm.elements.profile_name
@@ -69,11 +67,13 @@ const validationFormConfig = {
 //функция закрытия попапов
 const closePopup = (element) => {
   element.classList.remove('popup_opened')
+  document.removeEventListener('keydown', closeFormEscapeClick)
   }
 
 //функция открытия попапов
 const openPopup = (element) => {
   element.classList.add('popup_opened')
+  document.addEventListener('keydown', closeFormEscapeClick)
 }
 
 //функция добавления информации в инпуты при открытии формы редактирования профиля
@@ -84,16 +84,10 @@ const addInfoProfileForm = () => {
 
 //функция открытия карточки на полный экран
 const fullScreenImage = (evt) => {
-  const imagePopupFullScreen = document.querySelector('.popup__image')
-  const textPopupFullScreen = document.querySelector('.popup__description')
-
   openPopup(modalFullScreenForm)
   imagePopupFullScreen.src = evt.target.closest('.element__image').src
   textPopupFullScreen.textContent = evt.target.closest('.element').textContent
   imagePopupFullScreen.alt = evt.target.closest('.element').textContent.trim()
-  handleCloseFullScreenBtn.addEventListener('click', () => {
-    closePopup(modalFullScreenForm)
-  })
 }
 
 //функция сабмита формы добавления места
@@ -129,13 +123,14 @@ const addLike = (evt) => {
 //возврат разметки карточки
 const addCard = (element) => {
   const cardElement = elementTemplate.cloneNode(true)
+  const cardImage = cardElement.querySelector('.element__image')
 
   cardElement.querySelector('.element__title').textContent = element.name
-  cardElement.querySelector('.element__image').src = element.link
-  cardElement.querySelector('.element__image').alt = element.name
+  cardImage.src = element.link
+  cardImage.alt = element.name
   cardElement.querySelector('.element__delete').addEventListener('click', deleteCard)
   cardElement.querySelector('.element__like').addEventListener('click', addLike)
-  cardElement.querySelector('.element__image').addEventListener('click', fullScreenImage)
+  cardImage.addEventListener('click', fullScreenImage)
   return cardElement
 }
 
@@ -149,43 +144,47 @@ initialCards.forEach((element) => {
   createCards(element)
 })
 
-//закрытие форм по оверлею
-const closeFormOverlayClick = (evt) => {
-  if (evt.target.classList.contains('popup')) {
-   closePopup(evt.target)
+//закрытие форм по эскейпу
+const closeFormEscapeClick = (evt) => {
+  const popupOpened = document.querySelector('.popup_opened')
+
+  if (evt.key === 'Escape') {
+    closePopup(popupOpened)
   }
 }
 
-//закрытие форм по эскейпу
-const closeFormEscapeClick = (evt) => {
-  const keyEscape = evt.key
-  if (keyEscape === 'Escape') {
-    popups.forEach((element) => {
+//закрытие форм по оверлею и по крестику
+popups.forEach((element) => {
+  element.addEventListener('mousedown', (evt) => {
+    if (evt.target.classList.contains('popup_opened')) {
+        closePopup(element)
+    }
+    if (evt.target.classList.contains('popup__button-close')) {
       closePopup(element)
-    })
-  }
+    }
+  })
+})
+
+//вызов валидации форм
+enableValidation(validationFormConfig)
+
+//открытие формы добавления места
+const openModalAddForm = () => {
+  const submitBtn = modalAddForm.querySelector('.popup__submit')
+
+  submitBtn.setAttribute('disabled', true)
+  submitBtn.classList.add('popup__submit_disabled')
+  openPopup(modalAddForm)
+}
+
+//открытие формы редактирования профиля
+const openModalEditForm = () => {
+  addInfoProfileForm()
+  openPopup(modalEditFormPopup)
 }
 
 //ивенты
 modalEditFormPopup.addEventListener('submit', submitPopupProfile)
 modalAddForm.addEventListener('submit', submitPopupMesto)
-editBtn.addEventListener('click',() => {
-  openPopup(modalEditFormPopup)
-  addInfoProfileForm()
-  enableValidation(validationFormConfig)
-})
-
-addBtn.addEventListener('click',() => {
-  openPopup(modalAddForm)
-  enableValidation(validationFormConfig)
-})
-handleCloseEditBtn.addEventListener('click', () => {
-  closePopup(modalEditFormPopup)
-})
-handleCloseAddBtn.addEventListener('click', () => {
-  closePopup(modalAddForm)
-})
-popups.forEach((element) => {
-  element.addEventListener('mousedown', closeFormOverlayClick)
-})
-document.addEventListener('keydown', closeFormEscapeClick)
+editBtn.addEventListener('click',openModalEditForm)
+addBtn.addEventListener('click', openModalAddForm)

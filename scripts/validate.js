@@ -49,9 +49,8 @@ const hasEmptyInputValue = (inputList) => {
 }
 
 //функция переключения состояния кнопки
-const toggleButtonSubmitState = (formElement, inputList, submitButtonSelector, inactiveButtonClass) => {
-  const submitButton = formElement.querySelector(submitButtonSelector)
-  if (hasInvalidInput(inputList) || hasEmptyInputValue(inputList)) {
+const toggleButtonSubmitState = (inputList, inactiveButtonClass, submitButton) => {
+  if (hasInvalidInput(inputList)) {
     disableSubmitButton(submitButton, inactiveButtonClass)
   } else {
     enableSubmitButton(submitButton, inactiveButtonClass)
@@ -65,13 +64,14 @@ const addEventListeners = (formElement, inputSelector, inputErrorClass, errorCla
   })
 
   const inputList = Array.from(formElement.querySelectorAll(inputSelector))
+  const submitButton = formElement.querySelector(submitButtonSelector)
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', () => {
       checkInputValidity(formElement, inputElement, inputErrorClass, errorClass)
-      toggleButtonSubmitState(formElement, inputList, submitButtonSelector, inactiveButtonClass)
+      toggleButtonSubmitState(inputList, inactiveButtonClass, submitButton)
     })
   })
-  toggleButtonSubmitState(formElement, inputList, submitButtonSelector, inactiveButtonClass)
+  toggleButtonSubmitState(inputList, inactiveButtonClass, submitButton)
 }
 
 //функция включения валидации
