@@ -5,6 +5,7 @@
   width: 90%;
   font-size: 14px;
   line-height: 28.94px;
+  position: relative;
 }
 
 .popup__text:first-of-type {
