@@ -18,7 +18,7 @@ const jobPopup = editProfileForm.elements.profile_job
 const handleAddMestoName = addMestoForm.elements.mesto_title
 const handleAddMestoLink = addMestoForm.elements.mesto_link
 
-//профиль пользоватея
+//профиль пользователя
 const profileNameContent = document.querySelector('.profile__title')
 const profileJobContent = document.querySelector('.profile__subtitle')
 
@@ -102,7 +102,7 @@ const submitPopupMesto = (evt) => {
   closePopup(modalAddForm)
 }
 
-//функция подтверждения изменений в редактировнии профиля
+//функция подтверждения изменений в редактировании профиля
 const submitPopupProfile = (evt) => {
   evt.preventDefault();
   profileNameContent.textContent = namePopup.value
