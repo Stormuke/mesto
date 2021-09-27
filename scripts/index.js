@@ -1,3 +1,4 @@
+import Card from "./Card.js";
 //кнопки
 const addBtn = document.querySelector('.profile__add-button')
 const editBtn = document.querySelector('.profile__edit-button')
@@ -23,7 +24,7 @@ const profileNameContent = document.querySelector('.profile__title')
 const profileJobContent = document.querySelector('.profile__subtitle')
 
 //темплейт
-const elementTemplate = document.querySelector('.element_template').content.querySelector('.element')
+//const elementTemplate = document.querySelector('.element_template').content.querySelector('.element')
 const cardsContainer = document.querySelector('.elements')
 
 //массивы
@@ -53,6 +54,8 @@ const initialCards = [
     link: 'https://images.unsplash.com/photo-1625592526284-350c652fe4a5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1868&q=80'
   }
 ];
+
+
 
 //конфиг форм
 const validationFormConfig = {
@@ -93,10 +96,13 @@ const fullScreenImage = (evt) => {
 //функция сабмита формы добавления места
 const submitPopupMesto = (evt) => {
   evt.preventDefault()
-  createCards({
+  const newData = {
     name: handleAddMestoName.value,
     link: handleAddMestoLink.value
-})
+}
+  const card = new Card(newData)
+  const newPostElement = card.createCard()
+  cardsContainer.prepend(newPostElement)
 
   addMestoForm.reset()
   closePopup(modalAddForm)
@@ -110,17 +116,7 @@ const submitPopupProfile = (evt) => {
   closePopup(modalEditFormPopup)
 }
 
-//функция удаления карточек
-const deleteCard = (evt) => {
-  evt.target.closest('.element').remove();
-}
-
-//функция лайков
-const addLike = (evt) => {
-  evt.target.classList.toggle('element__like_active')
-}
-
-//возврат разметки карточки
+/*
 const addCard = (element) => {
   const cardElement = elementTemplate.cloneNode(true)
   const cardImage = cardElement.querySelector('.element__image')
@@ -134,15 +130,25 @@ const addCard = (element) => {
   return cardElement
 }
 
+
 //добавление карточек в контейнер
-const createCards = (element) => {
-  cardsContainer.prepend(addCard(element))
+
+const createCards = () => {
+  cardsContainer.prepend(cardElement)
 }
 
 //создание карточек
-initialCards.forEach((element) => {
-  createCards(element)
+
+
+ */
+
+initialCards.forEach((item) => {
+  const card = new Card(item)
+  const cardElement = card.createCard()
+
+  cardsContainer.prepend(cardElement)
 })
+
 
 //закрытие форм по эскейпу
 const closeFormEscapeClick = (evt) => {
