@@ -1,4 +1,5 @@
 import Card from "./Card.js";
+
 //кнопки
 const addBtn = document.querySelector('.profile__add-button')
 const editBtn = document.querySelector('.profile__edit-button')
@@ -23,8 +24,7 @@ const handleAddMestoLink = addMestoForm.elements.mesto_link
 const profileNameContent = document.querySelector('.profile__title')
 const profileJobContent = document.querySelector('.profile__subtitle')
 
-//темплейт
-//const elementTemplate = document.querySelector('.element_template').content.querySelector('.element')
+//контейнер карточек
 const cardsContainer = document.querySelector('.elements')
 
 //массивы
@@ -86,11 +86,11 @@ const addInfoProfileForm = () => {
 }
 
 //функция открытия карточки на полный экран
-const fullScreenImage = (evt) => {
+function handleClickImage(name, link) {
+  imagePopupFullScreen.src = link
+  imagePopupFullScreen.alt = name
+  textPopupFullScreen.textContent = name
   openPopup(modalFullScreenForm)
-  imagePopupFullScreen.src = evt.target.closest('.element__image').src
-  textPopupFullScreen.textContent = evt.target.closest('.element').textContent
-  imagePopupFullScreen.alt = evt.target.closest('.element').textContent.trim()
 }
 
 //функция сабмита формы добавления места
@@ -100,7 +100,7 @@ const submitPopupMesto = (evt) => {
     name: handleAddMestoName.value,
     link: handleAddMestoLink.value
 }
-  const card = new Card(newData)
+  const card = new Card(newData, handleClickImage)
   const newPostElement = card.createCard()
   cardsContainer.prepend(newPostElement)
 
@@ -116,34 +116,9 @@ const submitPopupProfile = (evt) => {
   closePopup(modalEditFormPopup)
 }
 
-/*
-const addCard = (element) => {
-  const cardElement = elementTemplate.cloneNode(true)
-  const cardImage = cardElement.querySelector('.element__image')
-
-  cardElement.querySelector('.element__title').textContent = element.name
-  cardImage.src = element.link
-  cardImage.alt = element.name
-  cardElement.querySelector('.element__delete').addEventListener('click', deleteCard)
-  cardElement.querySelector('.element__like').addEventListener('click', addLike)
-  cardImage.addEventListener('click', fullScreenImage)
-  return cardElement
-}
-
-
-//добавление карточек в контейнер
-
-const createCards = () => {
-  cardsContainer.prepend(cardElement)
-}
-
-//создание карточек
-
-
- */
-
+//создание карточек из массива
 initialCards.forEach((item) => {
-  const card = new Card(item)
+  const card = new Card(item, handleClickImage)
   const cardElement = card.createCard()
 
   cardsContainer.prepend(cardElement)

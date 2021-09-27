@@ -1,13 +1,8 @@
 export default class Card {
-  constructor(data) {
+  constructor(data, handleClickImage) {
     this._name = data.name
     this._link = data.link
-  }
-
-  _handleImageClick(evt) {
-    this._item.src = evt.target.closest('.element__image').src
-    this._item.textContent = evt.target.closest('.element').textContent
-    this._item.alt = evt.target.closest('.element').textContent.trim()
+    this._handleClickImage = handleClickImage
   }
 
   _toggleLikeState(evt) {
@@ -21,7 +16,7 @@ export default class Card {
   _setEventListeners() {
     this._item.querySelector('.element__delete').addEventListener('click', this._removeCard)
     this._item.querySelector('.element__like').addEventListener('click', this._toggleLikeState)
-    this._item.querySelector('.element__image').addEventListener('click', this._handleImageClick)
+    this._item.querySelector('.element__image').addEventListener('click', () => this._handleClickImage(this._name, this._link))
   }
 
   _getTemplateElement() {
