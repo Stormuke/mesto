@@ -22,7 +22,7 @@ export default class FormValidator {
     this._errorMessage.classList.remove(this._config.errorClass)
   }
   //метод отключающий кнопку
-  _disableSubmitButton() {
+  disableSubmitButton() {
     this._buttonElement.classList.add(this._config.inactiveButtonClass)
     this._buttonElement.setAttribute('disabled', true)
   }
@@ -58,7 +58,7 @@ export default class FormValidator {
   //функция переключения состояния кнопки
   _toggleButtonSubmitState() {
     if (this._hasInvalidInput() || this._hasEmptyInputValue()) {
-      this._disableSubmitButton()
+      this.disableSubmitButton()
     } else {
       this._enableSubmitButton()
     }

@@ -1,8 +1,9 @@
 export default class Card {
-  constructor(data, handleClickImage) {
+  constructor(data, handleClickImage, templateSelector) {
     this._name = data.name
     this._link = data.link
     this._handleClickImage = handleClickImage
+    this._teplateSelector = templateSelector
   }
 
   //метод переключающий кнопку лайк
@@ -24,17 +25,17 @@ export default class Card {
 
   //получение темплейта и клонирование
   _getTemplateElement() {
-    return document.querySelector('.element_template')
-      .content.querySelector('.element').cloneNode(true)
+    return this._teplateSelector.querySelector('.element').cloneNode(true)
   }
 
   //создание карточки
   createCard() {
     this._item = this._getTemplateElement()
+    const image = this._item.querySelector('.element__image')
     this._setEventListeners()
 
-    this._item.querySelector('.element__image').src = this._link
-    this._item.querySelector('.element__image').alt = this._name
+    image.src = this._link
+    image.alt = this._name
     this._item.querySelector('.element__title').textContent = this._name
 
     return this._item

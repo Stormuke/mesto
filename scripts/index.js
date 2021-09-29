@@ -27,6 +27,9 @@ const profileJobContent = document.querySelector('.profile__subtitle')
 //контейнер карточек
 const cardsContainer = document.querySelector('.elements')
 
+//поиск темплейта карт
+const getTemplateCard = document.querySelector('.element__template').content
+
 //массив карточек
 const initialCards = [
   {
@@ -71,12 +74,8 @@ const formValidatorAddForm = new FormValidator(validationFormConfig, addMestoFor
 
 //функция закрытия попапов
 const closePopup = (element) => {
-  const form = element.querySelector('.popup__form')
   document.removeEventListener('keydown', closeFormEscapeClick)
   element.classList.remove('popup_opened')
-  if (form) {
-    form.reset()
-  }
 }
 
 //функция открытия попапов
@@ -99,6 +98,13 @@ function handleClickImage(name, link) {
   openPopup(modalFullScreenForm)
 }
 
+//функция создания карточки
+function createCard(element) {
+  const card = new Card(element, handleClickImage, getTemplateCard)
+  return card.createCard()
+}
+
+
 //функция сабмита формы добавления места
 const submitPopupMesto = (evt) => {
   evt.preventDefault()
@@ -106,11 +112,8 @@ const submitPopupMesto = (evt) => {
     name: handleAddMestoName.value,
     link: handleAddMestoLink.value
 }
-  const card = new Card(newData, handleClickImage)
-  const newPostElement = card.createCard()
-  cardsContainer.prepend(newPostElement)
 
-  addMestoForm.reset()
+  cardsContainer.prepend(createCard(newData))
   closePopup(modalAddForm)
 }
 
@@ -124,10 +127,7 @@ const submitPopupProfile = (evt) => {
 
 //создание карточек из массива
 initialCards.forEach((item) => {
-  const card = new Card(item, handleClickImage)
-  const cardElement = card.createCard()
-
-  cardsContainer.prepend(cardElement)
+  cardsContainer.prepend(createCard(item))
 })
 
 
@@ -154,17 +154,16 @@ popups.forEach((element) => {
 
 //открытие формы добавления места
 const openModalAddForm = () => {
-  const submitBtn = modalAddForm.querySelector('.popup__submit')
-
-  submitBtn.setAttribute('disabled', true)
-  submitBtn.classList.add('popup__submit_disabled')
+  formValidatorAddForm.disableSubmitButton()
+  addMestoForm.reset()
   openPopup(modalAddForm)
 }
 
 //открытие формы редактирования профиля
 const openModalEditForm = () => {
-  addInfoProfileForm()
   openPopup(modalEditFormPopup)
+  editProfileForm.reset()
+  addInfoProfileForm()
 }
 
 //вызов валидации форм
