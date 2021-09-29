@@ -27,9 +27,6 @@ const profileJobContent = document.querySelector('.profile__subtitle')
 //контейнер карточек
 const cardsContainer = document.querySelector('.elements')
 
-//поиск темплейта карт
-const getTemplateCard = document.querySelector('.element__template')
-
 //массив карточек
 const initialCards = [
   {
