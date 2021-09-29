@@ -1,5 +1,5 @@
 import Card from "./Card.js";
-
+import FormValidator from "./FormValidator.js";
 //кнопки
 const addBtn = document.querySelector('.profile__add-button')
 const editBtn = document.querySelector('.profile__edit-button')
@@ -9,8 +9,8 @@ const popups = Array.from(document.querySelectorAll('.popup'))
 const modalEditFormPopup = document.querySelector('.popup_form_edit')
 const modalAddForm = document.querySelector('.popup_form_add')
 const modalFullScreenForm = document.querySelector('.popup_form_fullscreen')
-const editProfileForm = document.forms.edit_profile
-const addMestoForm = document.forms.add_mesto
+const editProfileForm = document.forms["edit_profile"]
+const addMestoForm = document.forms["add_mesto"]
 const imagePopupFullScreen = document.querySelector('.popup__image')
 const textPopupFullScreen = document.querySelector('.popup__description')
 
@@ -27,7 +27,7 @@ const profileJobContent = document.querySelector('.profile__subtitle')
 //контейнер карточек
 const cardsContainer = document.querySelector('.elements')
 
-//массивы
+//массив карточек
 const initialCards = [
   {
     name: 'Вьетнам',
@@ -55,8 +55,6 @@ const initialCards = [
   }
 ];
 
-
-
 //конфиг форм
 const validationFormConfig = {
   formSelector: '.popup__form',
@@ -67,10 +65,18 @@ const validationFormConfig = {
   errorClass: 'popup__text-error_visible'
 }
 
+//создание валидации для конкретной формы
+const formValidatorEditForm = new FormValidator(validationFormConfig, editProfileForm)
+const formValidatorAddForm = new FormValidator(validationFormConfig, addMestoForm)
+
 //функция закрытия попапов
 const closePopup = (element) => {
-  element.classList.remove('popup_opened')
+  const form = element.querySelector('.popup__form')
   document.removeEventListener('keydown', closeFormEscapeClick)
+  element.classList.remove('popup_opened')
+  if (form) {
+    form.reset()
+  }
 }
 
 //функция открытия попапов
@@ -146,9 +152,6 @@ popups.forEach((element) => {
   })
 })
 
-//вызов валидации форм
-enableValidation(validationFormConfig)
-
 //открытие формы добавления места
 const openModalAddForm = () => {
   const submitBtn = modalAddForm.querySelector('.popup__submit')
@@ -163,6 +166,10 @@ const openModalEditForm = () => {
   addInfoProfileForm()
   openPopup(modalEditFormPopup)
 }
+
+//вызов валидации форм
+formValidatorAddForm.enableValidation()
+formValidatorEditForm.enableValidation()
 
 //ивенты
 modalEditFormPopup.addEventListener('submit', submitPopupProfile)
