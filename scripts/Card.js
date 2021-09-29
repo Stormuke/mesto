@@ -25,7 +25,7 @@ export default class Card {
 
   //получение темплейта и клонирование
   _getTemplateElement() {
-    return this._teplateSelector.querySelector('.element').cloneNode(true)
+    return document.querySelector(this._teplateSelector).content.querySelector('.element').cloneNode(true)
   }
 
   //создание карточки

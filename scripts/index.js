@@ -28,7 +28,7 @@ const profileJobContent = document.querySelector('.profile__subtitle')
 const cardsContainer = document.querySelector('.elements')
 
 //поиск темплейта карт
-const getTemplateCard = document.querySelector('.element__template').content
+const getTemplateCard = document.querySelector('.element__template')
 
 //массив карточек
 const initialCards = [
@@ -100,7 +100,7 @@ function handleClickImage(name, link) {
 
 //функция создания карточки
 function createCard(element) {
-  const card = new Card(element, handleClickImage, getTemplateCard)
+  const card = new Card(element, handleClickImage, '.element__template')
   return card.createCard()
 }
 
