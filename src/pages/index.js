@@ -1,3 +1,5 @@
+import './index.css'
+
 import {
   addBtn,
   editBtn,
@@ -30,12 +32,13 @@ import UserInfo from "../componets/UserInfo.js";
 const formValidatorEditForm = new FormValidator(validationFormConfig, profileFormSelector)
 const formValidatorAddForm = new FormValidator(validationFormConfig, newMestoFormSelector)
 
-
+//создание экземпляра профиля
 const addInfoProfileForm = new UserInfo({
   userName: profileNameSelector,
   userInfo: profileJobSelector
 });
 
+//создание экземпляра попапа картинки на весь экран
 const popupImage = new PopupWithImage(
   modalFullScreenForm,
   imagePopupFullScreen,
@@ -43,6 +46,7 @@ const popupImage = new PopupWithImage(
 
 popupImage.setEventListeners()
 
+//создание карточки из массива
 function createCard(item) {
   const card = new Card({
       data: item,
@@ -54,7 +58,7 @@ function createCard(item) {
   return card.createCard();
 }
 
-
+//вставка карточек в разметку
 const defaultCards = new Section({
     items: initialCards,
     renderer: (item) => {
@@ -64,6 +68,7 @@ const defaultCards = new Section({
   cardsContainer
 )
 
+//отрисовка карточек
 defaultCards.renderItem()
 
 //создание экземпляра добавления места

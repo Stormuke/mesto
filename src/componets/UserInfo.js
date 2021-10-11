@@ -4,6 +4,7 @@ export default class UserInfo {
     this._userInfo = document.querySelector(userInfo)
   }
 
+  //получение данных пользователя
   getUserInfo() {
     const userData = {}
     userData.userName = this._userName.textContent
@@ -11,6 +12,7 @@ export default class UserInfo {
     return userData
   }
 
+  //установка новых данных в профиль
   setUserInfo(data) {
     this._userName.textContent = data.profile_name
     this._userInfo.textContent = data.profile_job

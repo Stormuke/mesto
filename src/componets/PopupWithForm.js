@@ -17,7 +17,6 @@ export default class PopupWithForm extends Popup {
     return formValues
   }
 
-  //установка слушателей
   setEventListeners() {
     super.setEventListeners()
     this._formList.addEventListener('submit', (evt) => {

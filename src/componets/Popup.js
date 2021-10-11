@@ -14,6 +14,7 @@ export default class Popup {
     document.removeEventListener('keydown', this._handleEscClose)
   }
 
+  //метод закрытия по эскейпу
   _handleEscClose(evt) {
     if (evt.key === 'Escape') {
       this.close()
