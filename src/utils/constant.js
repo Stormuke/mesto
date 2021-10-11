@@ -15,12 +15,10 @@ export const templateSelector = '.element__template'
 //инпуты форм
 export const namePopup = profileFormSelector.elements.profile_name
 export const jobPopup = profileFormSelector.elements.profile_job
-export const handleAddMestoName = newMestoFormSelector.elements.mesto_title
-export const handleAddMestoLink = newMestoFormSelector.elements.mesto_link
 
 //профиль пользователя
-export const profileNameSelector = document.querySelector('.profile__title')
-export const profileJobSelector = document.querySelector('.profile__subtitle')
+export const profileNameSelector = '.profile__title'
+export const profileJobSelector = '.profile__subtitle'
 
 //контейнер карточек
 export const cardsContainer = document.querySelector('.elements')

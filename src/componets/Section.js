@@ -5,6 +5,7 @@ export default class Section {
     this._containerSelector = containerSelector
   }
 
+  //отрисовка элемента
   renderItem() {
     this._items.forEach((item) => {
       this._renderer(item)
@@ -12,6 +13,7 @@ export default class Section {
 
   }
 
+  //добавление элемента в контейнер
   addItem(element) {
     this._containerSelector.prepend(element);
   }

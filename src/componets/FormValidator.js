@@ -21,6 +21,7 @@ export default class FormValidator {
     this._errorMessage.textContent = ''
     this._errorMessage.classList.remove(this._config.errorClass)
   }
+
   //метод отключающий кнопку
   disableSubmitButton() {
     this._buttonElement.classList.add(this._config.inactiveButtonClass)
@@ -55,6 +56,7 @@ export default class FormValidator {
       return !inputElement.validity.valid
     })
   }
+
   //функция переключения состояния кнопки
   _toggleButtonSubmitState() {
     if (this._hasInvalidInput() || this._hasEmptyInputValue()) {
@@ -67,14 +69,22 @@ export default class FormValidator {
   //метод навешивающий слушателей на поля
   _addEventListeners() {
     this._formElement.addEventListener('submit', (evt) => {
-        evt.preventDefault()
-      })
+      evt.preventDefault()
+    })
 
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
         this._checkInputValidity(inputElement)
         this._toggleButtonSubmitState()
       })
+    })
+  }
+
+  resetValidation() {
+    this._toggleButtonSubmitState();
+
+    this._inputList.forEach((input) => {
+      this._hideErrorText(input)
     })
   }
 

@@ -7,20 +7,20 @@
     name="viewport"
     content="width=device-width, initial-scale=1.0, maximum-scale=1"
   />
-  <link rel="stylesheet" href="./pages/index.css"/>
+  <link rel="stylesheet" href="src/pages/index.css"/>
   <title>Место</title>
 </head>
 <body class="page">
 <div class="container">
   <header class="header">
-    <img src="./images/logo.svg" alt="Логотип Место" class="header__logo"/>
+    <img src="src/images/logo.svg" alt="Логотип Место" class="header__logo"/>
   </header>
 
   <main>
     <section class="profile">
       <div class="profile__container">
         <img
-          src="./images/profile__image.jpg"
+          src="src/images/profile__image.jpg"
           alt="Картинка профиля"
           class="profile__avatar"
         />
@@ -88,7 +88,7 @@
           <h2 class="popup__title">Новое место</h2>
           <input
             type="text"
-            name="mesto_title"
+            name="name"
             id="mesto_title"
             class="popup__text"
             value=""
@@ -100,7 +100,7 @@
           <span class="popup__text-error" id="mesto_title-error"></span>
           <input
             type="url"
-            name="mesto_link"
+            name="link"
             class="popup__text"
             id="mesto_link"
             value=""
@@ -126,8 +126,8 @@
     <p class="footer__text" lang="en">&copy; 2021 Mesto Russia</p>
   </footer>
 </div>
-<script type="module" src="componets/FormValidator.js"></script>
-<script type="module" src="componets/Card.js"></script>
-<script type="module" src="pages/index.js"></script>
+<script type="module" src="src/componets/FormValidator.js"></script>
+<script type="module" src="src/componets/Card.js"></script>
+<script type="module" src="src/pages/index.js"></script>
 </body>
 </html>

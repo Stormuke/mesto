@@ -41,6 +41,8 @@ const popupImage = new PopupWithImage(
   imagePopupFullScreen,
   textPopupFullScreen)
 
+popupImage.setEventListeners()
+
 function createCard(item) {
   const card = new Card({
       data: item,
@@ -64,32 +66,43 @@ const defaultCards = new Section({
 
 defaultCards.renderItem()
 
-//открытие формы добавления места
+//создание экземпляра добавления места
 const openModalAddForm = new PopupWithForm({
   popupSelector: modalAddForm,
   submitForm: (item) => {
-    defaultCards.addItem(createCard(item));
+    defaultCards.addItem(createCard(item))
   }
 })
 
-//открытие формы редактирования профиля
+openModalAddForm.setEventListeners()
+
+//открытие формы добавление места
+const openModalAddPopup = () => {
+  formValidatorAddForm.resetValidation()
+  openModalAddForm.open()
+}
+
+//создание экземпляра редактирования профиля
 const openModalEditForm = new PopupWithForm({
   popupSelector: modalEditForm,
-  submitForm: (data) => {
-    addInfoProfileForm.setUserInfo(data)
+  submitForm: (item) => {
+    addInfoProfileForm.setUserInfo(item)
   }
 })
 
-//ивенты
-editBtn.addEventListener('click', () => {
+openModalEditForm.setEventListeners()
+
+//открытие формы редактирования профиля
+const openModalEditPopup = () => {
   jobPopup.value = addInfoProfileForm.getUserInfo().userInfo
   namePopup.value = addInfoProfileForm.getUserInfo().userName
   openModalEditForm.open()
-})
-addBtn.addEventListener('click', () => {
-    openModalAddForm.open()
-  }
-)
+}
+
+
+//ивенты
+editBtn.addEventListener('click', openModalEditPopup)
+addBtn.addEventListener('click', openModalAddPopup)
 
 //вызов валидации форм
 formValidatorAddForm.enableValidation()

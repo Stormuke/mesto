@@ -25,7 +25,6 @@
     height: 20px;
     top: -36px;
     right: 0;
-    background: center center no-repeat
-      url(../../../images/close-icon-small.svg);
+    background: center center no-repeat url(../../../images/close-icon-small.svg);
   }
 }

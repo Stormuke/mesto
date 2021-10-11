@@ -1,6 +1,5 @@
 .profile__edit-button {
-  background: center center no-repeat
-    url(../../../images/profile__edit-button.svg);
+  background: center center no-repeat url(../../../images/profile__edit-button.svg);
   border: 1px solid #fff;
   cursor: pointer;
   transition: opacity 0.2s linear;
