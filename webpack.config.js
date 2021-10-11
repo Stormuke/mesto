@@ -41,11 +41,11 @@ module.exports = {
     ]
   },
   plugins: [
-    new MiniCssExtractPlugin({filename: 'pages/[name].css'}),
     new HtmlWebpackPlugin({
       template: "./src/index.html",
       inject: "body"
     }),
+    new MiniCssExtractPlugin(),
     new CleanWebpackPlugin()
   ]
 }

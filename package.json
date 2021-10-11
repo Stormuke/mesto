@@ -4,7 +4,7 @@
   "description": "Mesto ===",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
+    "build": "webpack --mode production",
     "dev": "webpack serve"
   },
   "repository": {
