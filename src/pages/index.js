@@ -99,8 +99,9 @@ openModalEditForm.setEventListeners()
 
 //открытие формы редактирования профиля
 const openModalEditPopup = () => {
-  jobPopup.value = addInfoProfileForm.getUserInfo().userInfo
-  namePopup.value = addInfoProfileForm.getUserInfo().userName
+  const userData = addInfoProfileForm.getUserInfo()
+  jobPopup.value = userData.userInfo
+  namePopup.value = userData.userName
   openModalEditForm.open()
 }
 
