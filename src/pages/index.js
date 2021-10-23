@@ -17,7 +17,8 @@ import {
   profileJobSelector,
   cardsContainer,
   initialCards,
-  validationFormConfig
+  validationFormConfig,
+  modalDeleteForm
 } from "../utils/constant.js";
 
 import Card from "../componets/Card.js";
@@ -26,6 +27,16 @@ import Section from "../componets/Section.js";
 import PopupWithForm from "../componets/PopupWithForm.js";
 import PopupWithImage from "../componets/PopupWithImage.js";
 import UserInfo from "../componets/UserInfo.js";
+import Api from "../componets/Api.js";
+
+
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-29',
+  headers: {
+    authorization: '49cf51ee-b559-465c-b78a-86fb26662a6f',
+    'Content-Type': 'application/json'
+  }
+})
 
 
 //создание валидации для конкретной формы
@@ -58,28 +69,48 @@ function createCard(item) {
   return card.createCard();
 }
 
+
 //вставка карточек в разметку
-const defaultCards = new Section({
-    items: initialCards,
-    renderer: (item) => {
-      defaultCards.addItem(createCard(item))
-    }
-  },
-  cardsContainer
-)
+api.getInitialCards()
+  .then((res) => {
+    const createCards = new Section({
+        items: res,
+        renderer: (item) => {
+          createCards.addItem(createCard(item))
+        }
+      },
+      cardsContainer
+    )
+    createCards.renderItem()
+  })
+
 
 //отрисовка карточек
-defaultCards.renderItem()
+
 
 //создание экземпляра добавления места
 const openModalAddForm = new PopupWithForm({
   popupSelector: modalAddForm,
   submitForm: (item) => {
-    defaultCards.addItem(createCard(item))
+    api.postNewCard(item)
+      .then((res) => {
+        createCard(res)
+      })
   }
 })
 
 openModalAddForm.setEventListeners()
+
+const openModalDeleteForm = new PopupWithForm({
+  popupSelector: modalDeleteForm,
+  submitForm: (item => item._removeCard())
+})
+
+openModalDeleteForm.setEventListeners()
+
+const openModalDeletePopup = () => {
+  openModalDeleteForm.open()
+}
 
 //открытие формы добавление места
 const openModalAddPopup = () => {
@@ -91,7 +122,10 @@ const openModalAddPopup = () => {
 const openModalEditForm = new PopupWithForm({
   popupSelector: modalEditForm,
   submitForm: (item) => {
-    addInfoProfileForm.setUserInfo(item)
+    api.patchUserInfo(item)
+      .then((res) => {
+        addInfoProfileForm.setUserInfo(res)
+      })
   }
 })
 

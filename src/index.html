@@ -18,11 +18,13 @@
   <main>
     <section class="profile">
       <div class="profile__container">
-        <img
-          src="<%=require('./images/profile__image.jpg')%>"
-          alt="Картинка профиля"
-          class="profile__avatar"
-        />
+        <div class="profile__edit-avatar">
+          <img
+            src="<%=require('./images/profile__image.jpg')%>"
+            alt="Картинка профиля"
+            class="profile__avatar"
+          />
+        </div>
         <div class="profile__info">
           <div class="profile__title-container">
             <h1 class="profile__title">Жак-Ив Кусто</h1>
@@ -41,7 +43,10 @@
         <button class="element__delete"></button>
         <div class="element__content">
           <h2 class="element__title"></h2>
-          <button type="button" class="element__like"></button>
+          <div class="element__like-container">
+            <button type="button" class="element__like"></button>
+            <p class="element__like-count">1</p>
+          </div>
         </div>
       </article>
     </template>
@@ -107,6 +112,36 @@
             required
           />
           <span class="popup__text-error" id="mesto_link-error"></span>
+          <button type="submit" class="popup__submit">Сохранить</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="popup popup_form_delete">
+      <div class="popup__container">
+        <button type="button" class="popup__button-close"></button>
+        <form name="delete_mesto" class="popup__form" novalidate>
+          <h2 class="popup__title">Вы уверены?</h2>
+          <button type="submit" class="popup__submit">Да</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="popup popup_form_avatar">
+      <div class="popup__container">
+        <button type="button" class="popup__button-close"></button>
+        <form name="edit_avatar" class="popup__form" novalidate>
+          <h2 class="popup__title">Обновить аватар</h2>
+          <input
+            type="url"
+            name="avatar_link"
+            class="popup__text"
+            id="avatar_link"
+            value=""
+            placeholder="Ссылка на картинку"
+            required
+          />
+          <span class="popup__text-error" id="avatar_link-error"></span>
           <button type="submit" class="popup__submit">Сохранить</button>
         </form>
       </div>

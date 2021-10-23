@@ -5,6 +5,7 @@ export const editBtn = document.querySelector('.profile__edit-button')
 //формы и элементы
 export const modalEditForm = document.querySelector('.popup_form_edit')
 export const modalAddForm = document.querySelector('.popup_form_add')
+export const modalDeleteForm = document.querySelector('.popup_form_delete')
 export const modalFullScreenForm = document.querySelector('.popup_form_fullscreen')
 export const profileFormSelector = document.forms["edit_profile"]
 export const newMestoFormSelector = document.forms["add_mesto"]
