@@ -56,6 +56,9 @@ export default class Api {
         link: data.link
       })
     })
+      .then((res) => {
+        return this._handleRes(res)
+      })
   }
 
   //запрос удаления карточки

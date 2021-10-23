@@ -16,7 +16,6 @@ import {
   profileNameSelector,
   profileJobSelector,
   cardsContainer,
-  initialCards,
   validationFormConfig,
   modalDeleteForm
 } from "../utils/constant.js";
@@ -38,6 +37,12 @@ const api = new Api({
   }
 })
 
+api.getUserInfo()
+  .then((res) => {
+    document.querySelector(profileNameSelector).textContent = res.name
+    document.querySelector(profileJobSelector).textContent = res.about
+    document.querySelector(".profile__avatar").src = res.avatar
+  })
 
 //создание валидации для конкретной формы
 const formValidatorEditForm = new FormValidator(validationFormConfig, profileFormSelector)
@@ -47,7 +52,17 @@ const formValidatorAddForm = new FormValidator(validationFormConfig, newMestoFor
 const addInfoProfileForm = new UserInfo({
   userName: profileNameSelector,
   userInfo: profileJobSelector
-});
+})
+
+const openModalEditForm = new PopupWithForm({
+  popupSelector: modalEditForm,
+  submitForm: (item) => {
+    api.patchUserInfo(item)
+      .then((res) => {
+        addInfoProfileForm.setUserInfo(res)
+      })
+  }
+})
 
 //создание экземпляра попапа картинки на весь экран
 const popupImage = new PopupWithImage(
@@ -86,7 +101,8 @@ api.getInitialCards()
 
 
 //отрисовка карточек
-
+api.getInitialCards()
+  .then(res => console.log(res))
 
 //создание экземпляра добавления места
 const openModalAddForm = new PopupWithForm({
@@ -101,15 +117,23 @@ const openModalAddForm = new PopupWithForm({
 
 openModalAddForm.setEventListeners()
 
-const openModalDeleteForm = new PopupWithForm({
-  popupSelector: modalDeleteForm,
-  submitForm: (item => item._removeCard())
-})
 
-openModalDeleteForm.setEventListeners()
+//создание экземпляра редактирования профиля
 
-const openModalDeletePopup = () => {
-  openModalDeleteForm.open()
+api.getUserInfo()
+  .then(res => console.log(res))
+
+openModalEditForm.setEventListeners()
+
+//открытие формы редактирования профиля
+const openModalEditPopup = () => {
+  api.getUserInfo()
+    .then((res) => {
+      jobPopup.value = res.about
+      namePopup.value = res.name
+    })
+
+  openModalEditForm.open()
 }
 
 //открытие формы добавление места
@@ -118,28 +142,6 @@ const openModalAddPopup = () => {
   openModalAddForm.open()
 }
 
-//создание экземпляра редактирования профиля
-const openModalEditForm = new PopupWithForm({
-  popupSelector: modalEditForm,
-  submitForm: (item) => {
-    api.patchUserInfo(item)
-      .then((res) => {
-        addInfoProfileForm.setUserInfo(res)
-      })
-  }
-})
-
-openModalEditForm.setEventListeners()
-
-//открытие формы редактирования профиля
-const openModalEditPopup = () => {
-  const userData = addInfoProfileForm.getUserInfo()
-  jobPopup.value = userData.userInfo
-  namePopup.value = userData.userName
-  openModalEditForm.open()
-}
-
-
 //ивенты
 editBtn.addEventListener('click', openModalEditPopup)
 addBtn.addEventListener('click', openModalAddPopup)
@@ -147,3 +149,20 @@ addBtn.addEventListener('click', openModalAddPopup)
 //вызов валидации форм
 formValidatorAddForm.enableValidation()
 formValidatorEditForm.enableValidation()
+
+
+const openModalDeleteForm = new PopupWithForm({
+  popupSelector: modalDeleteForm,
+  submitForm: ((item) => {
+    api.deleteCard(item)
+      .then(res => {
+
+      })
+  })
+})
+
+const openModalDeletePopup = () => {
+  openModalDeleteForm.open()
+}
+openModalDeleteForm.setEventListeners()
+
