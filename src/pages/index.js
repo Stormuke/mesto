@@ -73,10 +73,12 @@ const popupImage = new PopupWithImage(
 
 popupImage.setEventListeners()
 
-//создание карточки из массива
-function createCard(item) {
+
+//создание карточки
+function newCard(item, res) {
   const card = new Card({
       data: item,
+      user: res,
       handleClickImage: () => {
         popupImage.open(item.name, item.link)
       },
@@ -85,14 +87,17 @@ function createCard(item) {
   return card.createCard();
 }
 
-
 //вставка карточек в разметку
 api.getInitialCards()
   .then((res) => {
     const createCards = new Section({
         items: res,
         renderer: (item) => {
-          createCards.addItem(createCard(item))
+          api.getUserInfo()
+            .then(res => {
+              createCards.addItem(newCard(item, res))
+            })
+
         }
       },
       cardsContainer
@@ -110,7 +115,7 @@ const openModalAddForm = new PopupWithForm({
   submitForm: (item) => {
     api.postNewCard(item)
       .then((res) => {
-        createCard(res)
+        newCard(res)
       })
   }
 })

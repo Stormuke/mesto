@@ -1,7 +1,5 @@
-import {data} from "autoprefixer";
-
 export default class Card {
-  constructor({data, handleClickImage}, templateSelector, api) {
+  constructor({data, user, handleClickImage}, templateSelector, api) {
     this._name = data.name
     this._link = data.link
     this._handleClickImage = handleClickImage
@@ -10,6 +8,7 @@ export default class Card {
     this._api = api
     this._id = data._id
     this._owner = data.owner
+    this._user = user
   }
 
   //метод переключающий кнопку лайк
@@ -31,9 +30,7 @@ export default class Card {
 
   //метод удаления карточки
   _removeCard() {
-    this._api.deleteCard(this._item)
-      .then(res => res.remove())
-    //this._item.remove();
+    this._item.remove();
   }
 
   //установка слушателей на карточку
@@ -61,13 +58,13 @@ export default class Card {
     this._likeCounter.textContent = this._likes.length
     this._item.querySelector('.element__title').textContent = this._name
 
-    //if (this._id !== this._owner._id) {
-    //  this._item.querySelector('.element__delete').style.display = 'none'
-    //}
-
-    //if (this._likes.find((like) => like._id === userData._id)) {
-    //  this._likeButton.classList.add('element__like_active');
-    //}
+    if (this._user._id !== this._owner._id) {
+      this._item.querySelector('.element__delete').style.display = 'none'
+    }
+    
+    if (this._likes.find((like) => like._id === this._user._id)) {
+      this._likeButton.classList.add('element__like_active');
+    }
 
     return this._item
   }
