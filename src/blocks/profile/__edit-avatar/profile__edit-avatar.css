@@ -2,12 +2,13 @@
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  background: url("../../../images/editAvatar.svg");
+  display: flex;
   cursor: pointer;
   z-index: 0;
 }
 
 .profile__edit-avatar:hover {
+
   background-color: rgba(0, 0, 0, 0.8);
   background-size: cover;
 }

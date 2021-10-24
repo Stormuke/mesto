@@ -3,8 +3,11 @@
   width: 120px;
   height: 120px;
   object-fit: cover;
+  display: flex;
 }
 
 .profile__avatar:hover {
+  background: center center no-repeat url("../../../images/editAvatar.svg");
+  z-index: 3;
   background-color: rgba(0, 0, 0, 0.8);
 }

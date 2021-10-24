@@ -1,25 +1,45 @@
+import {data} from "autoprefixer";
+
 export default class Card {
-  constructor({data, handleClickImage}, templateSelector) {
+  constructor({data, handleClickImage}, templateSelector, api) {
     this._name = data.name
     this._link = data.link
     this._handleClickImage = handleClickImage
     this._teplateSelector = templateSelector
+    this._likes = data.likes
+    this._api = api
+    this._id = data._id
+    this._owner = data.owner
   }
 
   //метод переключающий кнопку лайк
-  _toggleLikeState(evt) {
-    evt.target.classList.toggle('element__like_active')
+  _toggleLikeState() {
+    if (!this._likeButton.classList.contains('element__like_active')) {
+      this._api.addCardLike(this._id)
+        .then((data) => {
+          this._likeButton.classList.add('element__like_active')
+          this._likeCounter.textContent = `${data.likes.length}`
+        })
+    } else {
+      this._api.deleteCardLike(this._id)
+        .then((data) => {
+          this._likeButton.classList.remove('element__like_active')
+          this._likeCounter.textContent = `${data.likes.length}`
+        })
+    }
   }
 
   //метод удаления карточки
-  _removeCard(evt) {
-    evt.target.closest('.element').remove();
+  _removeCard() {
+    this._api.deleteCard(this._item)
+      .then(res => res.remove())
+    //this._item.remove();
   }
 
   //установка слушателей на карточку
   _setEventListeners() {
-    this._item.querySelector('.element__delete').addEventListener('click', this._removeCard)
-    this._item.querySelector('.element__like').addEventListener('click', this._toggleLikeState)
+    this._item.querySelector('.element__delete').addEventListener('click', () => this._removeCard(this))
+    this._item.querySelector('.element__like').addEventListener('click', () => this._toggleLikeState(this))
     this._item.querySelector('.element__image').addEventListener('click', () => this._handleClickImage(this._name, this._link))
   }
 
@@ -31,12 +51,23 @@ export default class Card {
   //создание карточки
   createCard() {
     this._item = this._getTemplateElement()
+    this._likeButton = this._item.querySelector('.element__like')
+    this._likeCounter = this._item.querySelector('.element__like-count')
     const image = this._item.querySelector('.element__image')
     this._setEventListeners()
 
     image.src = this._link
     image.alt = this._name
+    this._likeCounter.textContent = this._likes.length
     this._item.querySelector('.element__title').textContent = this._name
+
+    //if (this._id !== this._owner._id) {
+    //  this._item.querySelector('.element__delete').style.display = 'none'
+    //}
+
+    //if (this._likes.find((like) => like._id === userData._id)) {
+    //  this._likeButton.classList.add('element__like_active');
+    //}
 
     return this._item
   }

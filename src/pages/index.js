@@ -57,6 +57,7 @@ const addInfoProfileForm = new UserInfo({
 const openModalEditForm = new PopupWithForm({
   popupSelector: modalEditForm,
   submitForm: (item) => {
+
     api.patchUserInfo(item)
       .then((res) => {
         addInfoProfileForm.setUserInfo(res)
@@ -80,7 +81,7 @@ function createCard(item) {
         popupImage.open(item.name, item.link)
       },
     },
-    templateSelector);
+    templateSelector, api);
   return card.createCard();
 }
 
@@ -101,8 +102,7 @@ api.getInitialCards()
 
 
 //отрисовка карточек
-api.getInitialCards()
-  .then(res => console.log(res))
+
 
 //создание экземпляра добавления места
 const openModalAddForm = new PopupWithForm({
@@ -121,7 +121,13 @@ openModalAddForm.setEventListeners()
 //создание экземпляра редактирования профиля
 
 api.getUserInfo()
-  .then(res => console.log(res))
+  .then(res => console.log(res._id))
+
+api.getInitialCards()
+  .then((res) => {
+    console.log(res)
+  })
+
 
 openModalEditForm.setEventListeners()
 
