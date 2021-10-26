@@ -1,19 +1,22 @@
 export default class Section {
-  constructor({items, renderer}, containerSelector) {
-    this._items = items
+  constructor({renderer}, containerSelector, api) {
+    this._api = api
     this._renderer = renderer
     this._containerSelector = containerSelector
   }
 
   //отрисовка элемента
   renderItem() {
-    this._items.forEach((item) => {
-      this._renderer(item)
-    })
+    this._api.getInitialCards()
+      .then((res) => {
+        res.reverse().forEach((item) => {
+          this._renderer(item)
+        })
+      })
   }
 
   //добавление элемента в контейнер
   addItem(element) {
-    this._containerSelector.append(element);
+    this._containerSelector.prepend(element);
   }
 }

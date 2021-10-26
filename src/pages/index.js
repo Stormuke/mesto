@@ -33,6 +33,7 @@ import UserInfo from "../componets/UserInfo.js";
 import Api from "../componets/Api.js";
 import PopupWithConfirm from "../componets/PopupWithConfirm.js";
 
+//экземпляр класса апи
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-29',
   headers: {
@@ -41,6 +42,7 @@ const api = new Api({
   }
 })
 
+//изначальная отрисовка данных пользователя
 api.getUserInfo()
   .then((res) => {
     document.querySelector(profileNameSelector).textContent = res.name
@@ -52,6 +54,7 @@ api.getUserInfo()
 const formValidatorEditForm = new FormValidator(validationFormConfig, profileFormSelector)
 const formValidatorAddForm = new FormValidator(validationFormConfig, newMestoFormSelector)
 const formValidatorAvatarForm = new FormValidator(validationFormConfig, editAvatarFormSelector)
+const popupConfirmDelete = new PopupWithConfirm(modalDeleteForm)
 
 //создание экземпляра профиля
 const addInfoProfileForm = new UserInfo({
@@ -59,13 +62,51 @@ const addInfoProfileForm = new UserInfo({
   userInfo: profileJobSelector
 })
 
+//экземпляр формы редактирования профиля
 const openModalEditForm = new PopupWithForm({
   popupSelector: modalEditForm,
   submitForm: (item) => {
-
+    openModalEditForm.isLoading(true)
     api.patchUserInfo(item)
       .then((res) => {
         addInfoProfileForm.setUserInfo(res)
+      })
+      .catch(err => console.log(`Ошибка обновления пользовательских данных: ${err}`))
+      .finally(() => {
+        openModalEditForm.isLoading(false)
+      })
+  }
+})
+
+//экземпляр формы смены аватара
+const openModalAvatarEdit = new PopupWithForm({
+  popupSelector: modalAvatarForm,
+  submitForm: (item) => {
+    openModalAvatarEdit.isLoading(true)
+    api.updateAvatar(item)
+      .then((res) => {
+        profileAvatarImage.src = res.avatar
+        openModalAvatarEdit.close()
+      })
+      .catch(err => console.log(`Ошибка обновления аватара: ${err}`))
+      .finally(() => {
+        openModalAvatarEdit.isLoading(false)
+      })
+  }
+})
+
+//создание экземпляра добавления места
+const openModalAddForm = new PopupWithForm({
+  popupSelector: modalAddForm,
+  submitForm: (item) => {
+    openModalAddForm.isLoading(true)
+    api.postNewCard(item)
+      .then((res) => {
+        createCards.addItem(newCard(res))
+      })
+      .then(err => console.log(`Ошибка создания карточки: ${err}`))
+      .finally(() => {
+        openModalAddForm.isLoading(false)
       })
   }
 })
@@ -75,10 +116,6 @@ const popupImage = new PopupWithImage(
   modalFullScreenForm,
   imagePopupFullScreen,
   textPopupFullScreen)
-
-popupImage.setEventListeners()
-const popupConfirmDelete = new PopupWithConfirm(modalDeleteForm)
-popupConfirmDelete.setEventListeners()
 
 //создание карточки
 function newCard(item, res) {
@@ -95,6 +132,7 @@ function newCard(item, res) {
               card.removeCard()
               popupConfirmDelete.close()
             })
+            .catch(err => console.log(`Ошибка удаления карточки: ${err}`))
         })
         popupConfirmDelete.open()
       }
@@ -104,62 +142,16 @@ function newCard(item, res) {
 }
 
 //вставка карточек в разметку
-api.getInitialCards()
-  .then((res) => {
-    const createCards = new Section({
-        items: res,
-        renderer: (item) => {
-          api.getUserInfo()
-            .then(res => {
-              createCards.addItem(newCard(item, res))
-            })
-        }
-      },
-      cardsContainer
-    )
-    createCards.renderItem()
-  })
-
-
-//экземпляр формы смены аватара
-const openModalAvatarEdit = new PopupWithForm({
-  popupSelector: modalAvatarForm,
-  submitForm: (item) => {
-    api.updateAvatar(item)
-      .then((res) => {
-        profileAvatarImage.src = res.avatar
-        openModalAvatarEdit.close()
-      })
-  }
-})
-
-openModalAvatarEdit.setEventListeners()
-
-avatarUpdateButton.addEventListener('click', () => {
-  formValidatorAvatarForm.resetValidation()
-  openModalAvatarEdit.open()
-})
-
-//создание экземпляра добавления места
-const openModalAddForm = new PopupWithForm({
-  popupSelector: modalAddForm,
-  submitForm: (item) => {
-    api.postNewCard(item)
-      .then((res) => {
-        newCard(res, item)
-      })
-  }
-})
-
-openModalAddForm.setEventListeners()
+const createCards = new Section({
+    renderer: (item) => {
+      createCards.addItem(newCard(item))
+    }
+  },
+  cardsContainer, api
+)
 
 //отрисовка карточек
-
-
-//создание экземпляра редактирования профиля
-
-
-openModalEditForm.setEventListeners()
+createCards.renderItem()
 
 //открытие формы редактирования профиля
 const openModalEditPopup = () => {
@@ -168,6 +160,7 @@ const openModalEditPopup = () => {
       jobPopup.value = res.about
       namePopup.value = res.name
     })
+    .catch(err => console.log(`Ошибка получения данных профиля: ${err}`))
 
   openModalEditForm.open()
 }
@@ -178,27 +171,22 @@ const openModalAddPopup = () => {
   openModalAddForm.open()
 }
 
+//навешивание лиснеров на попап
+openModalAddForm.setEventListeners()
+openModalEditForm.setEventListeners()
+openModalAvatarEdit.setEventListeners()
+popupImage.setEventListeners()
+popupConfirmDelete.setEventListeners()
+
 //ивенты
 editBtn.addEventListener('click', openModalEditPopup)
 addBtn.addEventListener('click', openModalAddPopup)
+avatarUpdateButton.addEventListener('click', () => {
+  formValidatorAvatarForm.resetValidation()
+  openModalAvatarEdit.open()
+})
 
 //вызов валидации форм
 formValidatorAddForm.enableValidation()
 formValidatorEditForm.enableValidation()
 formValidatorAvatarForm.enableValidation()
-
-const openModalDeleteForm = new PopupWithForm({
-  popupSelector: modalDeleteForm,
-  submitForm: ((item) => {
-    api.deleteCard(item)
-      .then(res => {
-
-      })
-  })
-})
-
-const openModalDeletePopup = () => {
-  openModalDeleteForm.open()
-}
-openModalDeleteForm.setEventListeners()
-
