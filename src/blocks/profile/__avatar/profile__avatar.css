@@ -1,13 +1,9 @@
 .profile__avatar {
-  border-radius: 50%;
   width: 120px;
   height: 120px;
+  display: block;
   object-fit: cover;
-  display: flex;
-}
-
-.profile__avatar:hover {
-  background: center center no-repeat url("../../../images/editAvatar.svg");
-  z-index: 3;
-  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 50%;
+  position: relative;
+  z-index: -1;
 }

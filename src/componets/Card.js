@@ -1,5 +1,5 @@
 export default class Card {
-  constructor({data, user, handleClickImage}, templateSelector, api) {
+  constructor({data, user, handleClickImage, handleDeleteCard}, templateSelector, api) {
     this._name = data.name
     this._link = data.link
     this._handleClickImage = handleClickImage
@@ -9,6 +9,7 @@ export default class Card {
     this._id = data._id
     this._owner = data.owner
     this._user = user
+    this._handleDeleteCard = handleDeleteCard
   }
 
   //метод переключающий кнопку лайк
@@ -29,13 +30,13 @@ export default class Card {
   }
 
   //метод удаления карточки
-  _removeCard() {
+  removeCard() {
     this._item.remove();
   }
 
   //установка слушателей на карточку
   _setEventListeners() {
-    this._item.querySelector('.element__delete').addEventListener('click', () => this._removeCard(this))
+    this._item.querySelector('.element__delete').addEventListener('click', () => this._handleDeleteCard(this))
     this._item.querySelector('.element__like').addEventListener('click', () => this._toggleLikeState(this))
     this._item.querySelector('.element__image').addEventListener('click', () => this._handleClickImage(this._name, this._link))
   }
@@ -61,7 +62,7 @@ export default class Card {
     if (this._user._id !== this._owner._id) {
       this._item.querySelector('.element__delete').style.display = 'none'
     }
-    
+
     if (this._likes.find((like) => like._id === this._user._id)) {
       this._likeButton.classList.add('element__like_active');
     }

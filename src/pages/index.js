@@ -5,6 +5,7 @@ import {
   editBtn,
   modalEditForm,
   modalAddForm,
+  modalAvatarForm,
   modalFullScreenForm,
   profileFormSelector,
   newMestoFormSelector,
@@ -17,7 +18,10 @@ import {
   profileJobSelector,
   cardsContainer,
   validationFormConfig,
-  modalDeleteForm
+  modalDeleteForm,
+  profileAvatarImage,
+  avatarUpdateButton,
+  editAvatarFormSelector
 } from "../utils/constant.js";
 
 import Card from "../componets/Card.js";
@@ -27,7 +31,7 @@ import PopupWithForm from "../componets/PopupWithForm.js";
 import PopupWithImage from "../componets/PopupWithImage.js";
 import UserInfo from "../componets/UserInfo.js";
 import Api from "../componets/Api.js";
-
+import PopupWithConfirm from "../componets/PopupWithConfirm.js";
 
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-29',
@@ -47,6 +51,7 @@ api.getUserInfo()
 //создание валидации для конкретной формы
 const formValidatorEditForm = new FormValidator(validationFormConfig, profileFormSelector)
 const formValidatorAddForm = new FormValidator(validationFormConfig, newMestoFormSelector)
+const formValidatorAvatarForm = new FormValidator(validationFormConfig, editAvatarFormSelector)
 
 //создание экземпляра профиля
 const addInfoProfileForm = new UserInfo({
@@ -72,7 +77,8 @@ const popupImage = new PopupWithImage(
   textPopupFullScreen)
 
 popupImage.setEventListeners()
-
+const popupConfirmDelete = new PopupWithConfirm(modalDeleteForm)
+popupConfirmDelete.setEventListeners()
 
 //создание карточки
 function newCard(item, res) {
@@ -82,9 +88,19 @@ function newCard(item, res) {
       handleClickImage: () => {
         popupImage.open(item.name, item.link)
       },
+      handleDeleteCard: () => {
+        popupConfirmDelete.setSubmitAction(() => {
+          api.deleteCard(card)
+            .then(() => {
+              card.removeCard()
+              popupConfirmDelete.close()
+            })
+        })
+        popupConfirmDelete.open()
+      }
     },
-    templateSelector, api);
-  return card.createCard();
+    templateSelector, api)
+  return card.createCard()
 }
 
 //вставка карточек в разметку
@@ -97,7 +113,6 @@ api.getInitialCards()
             .then(res => {
               createCards.addItem(newCard(item, res))
             })
-
         }
       },
       cardsContainer
@@ -106,8 +121,24 @@ api.getInitialCards()
   })
 
 
-//отрисовка карточек
+//экземпляр формы смены аватара
+const openModalAvatarEdit = new PopupWithForm({
+  popupSelector: modalAvatarForm,
+  submitForm: (item) => {
+    api.updateAvatar(item)
+      .then((res) => {
+        profileAvatarImage.src = res.avatar
+        openModalAvatarEdit.close()
+      })
+  }
+})
 
+openModalAvatarEdit.setEventListeners()
+
+avatarUpdateButton.addEventListener('click', () => {
+  formValidatorAvatarForm.resetValidation()
+  openModalAvatarEdit.open()
+})
 
 //создание экземпляра добавления места
 const openModalAddForm = new PopupWithForm({
@@ -115,23 +146,17 @@ const openModalAddForm = new PopupWithForm({
   submitForm: (item) => {
     api.postNewCard(item)
       .then((res) => {
-        newCard(res)
+        newCard(res, item)
       })
   }
 })
 
 openModalAddForm.setEventListeners()
 
+//отрисовка карточек
+
 
 //создание экземпляра редактирования профиля
-
-api.getUserInfo()
-  .then(res => console.log(res._id))
-
-api.getInitialCards()
-  .then((res) => {
-    console.log(res)
-  })
 
 
 openModalEditForm.setEventListeners()
@@ -160,7 +185,7 @@ addBtn.addEventListener('click', openModalAddPopup)
 //вызов валидации форм
 formValidatorAddForm.enableValidation()
 formValidatorEditForm.enableValidation()
-
+formValidatorAvatarForm.enableValidation()
 
 const openModalDeleteForm = new PopupWithForm({
   popupSelector: modalDeleteForm,

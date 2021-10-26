@@ -8,7 +8,7 @@ export default class Api {
     if (res.ok) {
       return res.json()
     }
-    return Promise.reject(`Ошибка: ${res.status}`)
+    return Promise.reject(console.log(`Ошибка: ${res.status}`))
   }
 
   //запрос пользовательских данных
@@ -94,4 +94,16 @@ export default class Api {
       })
   }
 
+  updateAvatar(data) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: data.avatar_link
+      })
+    })
+      .then((res) => {
+        return this._handleRes(res)
+      })
+  }
 }
