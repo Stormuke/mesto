@@ -46,13 +46,15 @@ const formValidatorAddForm = new FormValidator(validationFormConfig, newMestoFor
 const formValidatorAvatarForm = new FormValidator(validationFormConfig, editAvatarFormSelector)
 const popupConfirmDelete = new PopupWithConfirm(modalDeleteForm)
 
-
+let userId
 //изначальная отрисовка данных пользователя
 api.getUserInfo()
   .then((res) => {
     userInfo.setUserInfo(res)
     userInfo.setUserAvatar(res)
+    userId = res._id
   })
+
 
 //создание экземпляра профиля
 const userInfo = new UserInfo({
@@ -135,9 +137,23 @@ function newCard(item) {
             .catch(err => console.log(`Ошибка удаления карточки: ${err}`))
         })
         popupConfirmDelete.open()
+      },
+      handleLikeCard: () => {
+        const status = card.getLikeStatus()
+        if (status) {
+          api.deleteCardLike(card.getCardId())
+            .then((data) => {
+              card.setLikes(data)
+            })
+        } else {
+          api.addCardLike(card.getCardId())
+            .then((data) => {
+              card.setLikes(data)
+            })
+        }
       }
     },
-    templateSelector, api)
+    templateSelector, userId)
   return card.createCard()
 }
 
@@ -147,11 +163,15 @@ const createCards = new Section({
       createCards.addItem(newCard(item))
     }
   },
-  cardsContainer, api
+  cardsContainer
 )
 
 //отрисовка карточек
-createCards.renderItem()
+api.getInitialCards()
+  .then((res) => {
+    createCards.renderItem(res)
+  })
+  .catch(err => console.log(`Ошибка отрисовки карточек: ${err}`))
 
 //открытие формы редактирования профиля
 const openModalEditPopup = () => {
