@@ -5,4 +5,5 @@
   object-fit: cover;
   box-sizing: border-box;
   cursor: pointer;
+  display: block;
 }

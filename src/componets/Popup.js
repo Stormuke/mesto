@@ -2,7 +2,6 @@ export default class Popup {
   constructor(popupSelector) {
     this._popup = popupSelector
     this._handleEscClose = this._handleEscClose.bind(this)
-    this._saveButton = this._popup.querySelector('.popup__submit')
   }
 
   open() {
@@ -33,13 +32,6 @@ export default class Popup {
     })
   }
 
-  isLoading(isLoading) {
-    if (isLoading === true) {
-      this._saveButton.textContent = 'Сохранение...'
-    } else {
-      this._saveButton.textContent = 'Сохранить'
-    }
-  }
 
 }
 

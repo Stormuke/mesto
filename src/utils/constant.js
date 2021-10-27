@@ -22,7 +22,7 @@ export const jobPopup = profileFormSelector.elements.profile_job
 //профиль пользователя
 export const profileNameSelector = '.profile__title'
 export const profileJobSelector = '.profile__subtitle'
-export const profileAvatarImage = document.querySelector('.profile__avatar')
+export const profileAvatarImage = '.profile__avatar'
 export const avatarUpdateButton = document.querySelector('.profile__edit-avatar')
 
 //контейнер карточек

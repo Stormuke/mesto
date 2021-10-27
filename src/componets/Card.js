@@ -30,7 +30,8 @@ export default class Card {
 
   //метод удаления карточки
   removeCard() {
-    this._item.remove();
+    this._item.remove()
+    this._item = null
   }
 
   //установка слушателей на карточку
@@ -68,7 +69,7 @@ export default class Card {
           this._likeButton.classList.add('element__like_active');
         }
       })
-    
+
     return this._item
   }
 }
