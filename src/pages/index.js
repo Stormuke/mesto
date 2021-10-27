@@ -139,13 +139,13 @@ function newCard(item) {
         popupConfirmDelete.open()
       },
       handleLikeCard: () => {
-        if (card.checkUserLike()) {
+        if (card.isLiked) {
           api.deleteCardLike(card.getCardId())
             .then((res) => {
               card.unsetLike()
               card.updateLikes(res.likes)
             })
-        } else if (!card.checkUserLike()) {
+        } else {
           api.addCardLike(card.getCardId())
             .then((res) => {
               card.setLike()

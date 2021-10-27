@@ -42,10 +42,12 @@ export default class Card {
     }
   }
 
-  //переключение закрашенной иконки если лайкнул пользователь
-  _toggleUserLikeIcon() {
-    if (this._likes.find((like) => like._id === this._userId)) {
-      this._likeButton.classList.add('element__like_active');
+  //переключение лайков
+  _toggleLikeState() {
+    if (this._checkUserLike()) {
+      this.setLike()
+    } else {
+      this.unsetLike()
     }
   }
 
@@ -57,7 +59,7 @@ export default class Card {
     const image = this._item.querySelector('.element__image')
     this._setEventListeners()
     this._toggleTrashButton()
-    this._toggleUserLikeIcon()
+    this._toggleLikeState()
 
     this._likeCounter.textContent = this._likes.length
     image.src = this._link
@@ -67,19 +69,22 @@ export default class Card {
     return this._item
   }
 
+
   setLike() {
     this._likeButton.classList.add('element__like_active')
+    this.isLiked = true
   }
 
   unsetLike() {
-    this._likeButton.classList.remove('element__like_active');
+    this._likeButton.classList.remove('element__like_active')
+    this.isLiked = false
   }
 
   updateLikes(data) {
     this._likeCounter.textContent = data.length
   }
 
-  checkUserLike() {
+  _checkUserLike() {
     return this._likes.some((item) => item._id === this._userId)
   }
 
