@@ -46,7 +46,9 @@ const formValidatorAddForm = new FormValidator(validationFormConfig, newMestoFor
 const formValidatorAvatarForm = new FormValidator(validationFormConfig, editAvatarFormSelector)
 const popupConfirmDelete = new PopupWithConfirm(modalDeleteForm)
 
+//id пользователя
 let userId
+
 //изначальная отрисовка данных пользователя
 api.getUserInfo()
   .then((res) => {
@@ -54,6 +56,7 @@ api.getUserInfo()
     userInfo.setUserAvatar(res)
     userId = res._id
   })
+  .catch(err => console.log(`Ошибка получения данных пользователя: ${err}`))
 
 
 //создание экземпляра профиля
@@ -107,7 +110,7 @@ const newMesto = new PopupWithForm({
         createCards.addItem(newCard(res))
         newMesto.close()
       })
-      .then(err => console.log(`Ошибка создания карточки: ${err}`))
+      .catch(err => console.log(`Ошибка создания карточки: ${err}`))
       .finally(() => {
         newMesto.isLoading(false)
       })
@@ -145,12 +148,14 @@ function newCard(item) {
               card.unsetLike()
               card.updateLikes(res.likes)
             })
+            .catch(err => console.log(`Ошибка при удалении лайка: ${err}`))
         } else {
           api.addCardLike(card.getCardId())
             .then((res) => {
               card.setLike()
               card.updateLikes(res.likes)
             })
+            .catch(err => console.log(`Ошибка при постановке лайка: ${err}`))
         }
       }
     },
