@@ -58,41 +58,29 @@ export default class Card {
     this._setEventListeners()
     this._toggleTrashButton()
     this._toggleUserLikeIcon()
-    this.setLikes(this._likesArray)
 
-
+    this._likeCounter.textContent = this._likes.length
     image.src = this._link
     image.alt = this._name
-    this._likeCounter.textContent = this._likes.length
     this._item.querySelector('.element__title').textContent = this._name
 
     return this._item
   }
 
-  setLikes(data) {
-    this._likesArray = this._likes;
-    this._updateLikes();
-    this._updateLikeStatus();
+  setLike() {
+    this._likeButton.classList.add('element__like_active')
   }
 
-  _updateLikeStatus() {
-    const status = this.getLikeStatus()
-
+  unsetLike() {
     this._likeButton.classList.remove('element__like_active');
-
-
-    if (status) {
-      this._likeButton.classList.add('element__like_active')
-    }
   }
 
-  _updateLikes() {
-    this._likeCounter.textContent = this._likesArray.length
+  updateLikes(data) {
+    this._likeCounter.textContent = data.length
   }
 
-  getLikeStatus() {
-    return this._likes.find((user) => {
-      return user._id === this._userId
-    })
+  checkUserLike() {
+    return this._likes.some((item) => item._id === this._userId)
   }
+
 }

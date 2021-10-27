@@ -139,16 +139,17 @@ function newCard(item) {
         popupConfirmDelete.open()
       },
       handleLikeCard: () => {
-        const status = card.getLikeStatus()
-        if (status) {
+        if (card.checkUserLike()) {
           api.deleteCardLike(card.getCardId())
-            .then((data) => {
-              card.setLikes(data)
+            .then((res) => {
+              card.unsetLike()
+              card.updateLikes(res.likes)
             })
-        } else {
+        } else if (!card.checkUserLike()) {
           api.addCardLike(card.getCardId())
-            .then((data) => {
-              card.setLikes(data)
+            .then((res) => {
+              card.setLike()
+              card.updateLikes(res.likes)
             })
         }
       }
