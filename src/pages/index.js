@@ -19,7 +19,9 @@ import {
   modalDeleteForm,
   profileAvatarImage,
   avatarUpdateButton,
-  editAvatarFormSelector
+  editAvatarFormSelector,
+  inputName,
+  inputAbout
 } from "../utils/constant.js";
 
 import Card from "../componets/Card.js";
@@ -181,7 +183,9 @@ api.getInitialCards()
 
 //открытие формы редактирования профиля
 const openModalEditPopup = () => {
-  userInfo.getUserInfo()
+  const userData = userInfo.getUserInfo()
+  inputName.value = userData.name
+  inputAbout.value = userData.about
   userInfoEdit.open()
 }
 

@@ -7,11 +7,10 @@ export default class UserInfo {
 
   //получение данных пользователя
   getUserInfo() {
-    const userData = {}
-    profile_name.value = this._userName.textContent
-    profile_job.value = this._userInfo.textContent
-
-    return userData
+    return {
+      name: this._userName.textContent,
+      about: this._userInfo.textContent
+    }
   }
 
   //установка новых данных в профиль

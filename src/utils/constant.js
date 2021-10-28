@@ -16,8 +16,8 @@ export const textPopupFullScreen = document.querySelector('.popup__description')
 export const templateSelector = '.element__template'
 
 //инпуты форм
-export const namePopup = profileFormSelector.elements.profile_name
-export const jobPopup = profileFormSelector.elements.profile_job
+export const inputName = profileFormSelector.elements.profile_name
+export const inputAbout = profileFormSelector.elements.profile_job
 
 //профиль пользователя
 export const profileNameSelector = '.profile__title'
