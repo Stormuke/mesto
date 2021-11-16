@@ -23,4 +23,31 @@ Mesto
 Валидация форм и создание карточек написаны по ООП.
 Проект собран Вебпаком.
 
-https://stormuke.github.io/mesto/
+ссылка на проект: https://stormuke.github.io/mesto/
+
+## Для начала работы вам необходим:
+
+- <a href="https://nodejs.org/en/">NodeJS & npm<a> - среда выполенния кода JavaScript вне браузера. Позволяет писать серверныфй код для динамических веб-страниц и веб-приложений.
+- <a href="https://gitforwindows.org/">Git Bash<a> если вы используете Windows OS.
+
+## Установка
+
+Склонировать проект на ПК:
+
+    git clone https://github.com/Stormuke/Mesto.git
+
+Установить зависимости
+
+    npm install
+
+## Работа
+
+#### Запуск демо:
+
+    npm run dev
+    
+Это приведет к запуску локального сервера доступного по ссылке http://localhost:8555/, все файлы будут компилироваться в режиме разработки.
+
+#### Для сборки проекта в production:
+
+    npm run build
