@@ -34,7 +34,7 @@ Mesto
 
 Склонировать проект на ПК:
 
-    git clone https://github.com/Stormuke/Mesto.git
+    git clone git@github.com:Stormuke/mesto.git
 
 Установить зависимости
 
